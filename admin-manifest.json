@@ -1,0 +1,22 @@
+{
+  "name": "بالميرا ستور - لوحة التحكم",
+  "short_name": "Admin Palmira",
+  "description": "لوحة تحكم متجر بالميرا ستور",
+  "start_url": "/admin-panel.html",
+  "display": "standalone",
+  "background_color": "#1a1a2e",
+  "theme_color": "#1a1a2e",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "palmira_store.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "palmira_store.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

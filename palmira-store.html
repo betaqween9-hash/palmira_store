@@ -1,0 +1,1782 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PALMYRA STORE - متجر التجميل</title>
+    <link rel="stylesheet" href="palmira-store.css?v=1.1">
+
+    <!-- Google Fonts (Removed for Offline - Using System Fonts) -->
+
+    <!-- Font Awesome (Removed for Offline Local Icons) -->
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-top">
+            <div class="header-left">
+                <button class="menu-toggle" onclick="toggleMenu()">
+                    <div class="menu-circle">
+                        <img src="assets/icons/menu.svg" class="icon icon-white" alt="menu">
+                    </div>
+                </button>
+                <div class="logo">
+                    <img src="palmira_store.png" alt="PALMYRA STORE" class="logo-img">
+                    <span class="logo-text">PALMYRA STORE</span>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <div class="header-icons">
+                    <button class="icon-btn search-toggle-btn" onclick="toggleSearch()" title="البحث">
+                        <img src="assets/icons/search.svg" class="icon" alt="search">
+                    </button>
+                    <button class="icon-btn" onclick="navigateTo('login')" title="الحساب">
+                        <img src="assets/icons/user.svg" class="icon" alt="user">
+                    </button>
+                    <button class="icon-btn notification-btn" onclick="navigateTo('notifications')" title="الإشعارات">
+                        <img src="assets/icons/notifications.svg" class="icon" alt="notifications">
+                        <span class="badge" id="notificationBadge">0</span>
+                    </button>
+                    <button class="icon-btn cart-btn" onclick="navigateTo('cart')" title="السلة">
+                        <img src="assets/icons/cart.svg" class="icon" alt="cart">
+                        <span class="badge" id="cartBadge">0</span>
+                    </button>
+                </div>
+
+                <div class="currency-selector">
+                    <button class="currency-btn" onclick="toggleCurrencyDropdown()" title="العملة">
+                        <span id="currentCurrencySymbol">ر.س</span>
+                        <img src="assets/icons/arrow-down.svg" class="icon icon-sm" alt="dropdown">
+                    </button>
+                    <div class="currency-dropdown" id="currencyDropdown">
+                        <div class="currency-option" id="currency-SAR" onclick="setCurrency('SAR')">
+                            <span class="currency-flag">🇸🇦</span>
+                            <span class="currency-name">ريال سعودي</span>
+                            <span class="currency-code">SAR</span>
+                        </div>
+                        <div class="currency-option" id="currency-YER" onclick="setCurrency('YER')">
+                            <span class="currency-flag">🇾🇪</span>
+                            <span class="currency-name">ريال يمني</span>
+                            <span class="currency-code">YER</span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <nav class="header-nav">
+                    <a href="#" onclick="navigateTo('all-categories')">جميع الأقسام</a>
+                    <a href="#" onclick="navigateTo('brands')">الماركات</a>
+                    <a href="#" onclick="navigateTo('skin')">البشرة</a>
+                    <a href="#" onclick="navigateTo('offers')">العروض</a>
+                </nav>
+            </div>
+
+            <!-- Search Dropdown -->
+            <div class="search-dropdown" id="searchDropdown">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="ابحث عن المنتجات..." id="searchInput">
+                    <button class="search-btn">
+                        <img src="assets/icons/search.svg" class="icon" alt="search">
+                    </button>
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+            </div>
+
+            <!-- Dropdown Menu -->
+            <div class="dropdown-menu" id="dropdownMenu">
+            <div class="dropdown-content">
+                <div class="dropdown-section">
+                    <ul>
+                        <li class="home-option" onclick="navigateTo('home')"><img src="assets/icons/home.svg" class="icon" alt="home"> الرئيسية</li>
+                        <li class="nav-option" onclick="navigateTo('offers')"><img src="assets/icons/offers.svg" class="icon" alt="offers"> العروض</li>
+                        <li class="nav-option" onclick="navigateTo('brands')"><img src="assets/icons/brands.svg" class="icon" alt="brands"> الماركات</li>
+                        <li class="nav-option" onclick="navigateTo('skin')"><img src="assets/icons/skin.svg" class="icon" alt="skin"> البشرة</li>
+                    </ul>
+                </div>
+                <div class="dropdown-section">
+                    <h4>العناية بالبشرة</h4>
+                    <ul>
+                        <li class="all-products-btn" onclick="showCategoryProducts('skin')"><img src="assets/icons/categories.svg" class="icon icon-white" alt="all"> جميع منتجات البشرة</li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('skin', 'face', 'العناية بالوجه')">العناية بالوجه</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('skin', 'face', 'غسول وجه')">غسول وجه</li>
+                                <li onclick="showCategoryProducts('skin', 'face', 'قناع الوجه')">قناع الوجه</li>
+                                <li onclick="showCategoryProducts('skin', 'face', 'مقشر الوجه')">مقشر الوجه</li>
+                                <li onclick="showCategoryProducts('skin', 'face', 'تونر الوجه')">تونر الوجه</li>
+                                <li onclick="showCategoryProducts('skin', 'face', 'سيروم الوجه')">سيروم الوجه</li>
+                                <li onclick="showCategoryProducts('skin', 'face', 'مرطب الوجه')">مرطب الوجه</li>
+                                <li onclick="showCategoryProducts('skin', 'face', 'صابون قالب')">صابون قالب</li>
+                                <li onclick="showCategoryProducts('skin', 'face', 'لصقات حب الشباب')">لصقات حب الشباب</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('skin', 'eye', 'العناية بالعين')">العناية بالعين</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('skin', 'eye', 'كريم العين')">كريم</li>
+                                <li onclick="showCategoryProducts('skin', 'eye', 'سيروم العين')">سيروم</li>
+                                <li onclick="showCategoryProducts('skin', 'eye', 'قناع العين')">قناع</li>
+                                <li onclick="showCategoryProducts('skin', 'eye', 'شرائح العين')">شرائح</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('skin', 'mouth', 'العناية بالفم')">العناية بالفم</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('skin', 'mouth', 'معجون أسنان')">معجون أسنان</li>
+                                <li onclick="showCategoryProducts('skin', 'mouth', 'غسول الفم')">غسول الفم</li>
+                                <li onclick="showCategoryProducts('skin', 'mouth', 'لصقات تبيض الأسنان')">لصقات تبيض الأسنان</li>
+                                <li onclick="showCategoryProducts('skin', 'mouth', 'عناية اللسان')">عناية اللسان</li>
+                                <li onclick="showCategoryProducts('skin', 'mouth', 'أجهزة العناية بالفم')">أجهزة العناية بالفم</li>
+                                <li onclick="showCategoryProducts('skin', 'mouth', 'فرش الأسنان')">فرش الأسنان</li>
+                                <li onclick="showCategoryProducts('skin', 'mouth', 'خيط الأسنان')">خيط الأسنان</li>
+                                <li onclick="showCategoryProducts('skin', 'mouth', 'معطر فم')">معطر فم</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('skin', 'hand', 'العناية باليدين')">العناية باليدين</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('skin', 'hand', 'مرطبات اليدين')">مرطبات اليدين</li>
+                                <li onclick="showCategoryProducts('skin', 'hand', 'العناية بالأظافر')">العناية بالأظافر</li>
+                                <li onclick="showCategoryProducts('skin', 'hand', 'قفازات اليدين')">قفازات اليدين تقشير وترطيب</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('skin', 'foot', 'العناية بالقدمين')">العناية بالقدمين</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('skin', 'foot', 'مرطب القدمين')">مرطب القدمين</li>
+                                <li onclick="showCategoryProducts('skin', 'foot', 'جوارب القدمين')">جوارب القدمين تقشير وترطيب</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('skin', 'body', 'العناية بالجسم')">العناية بالجسم</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('skin', 'body', 'عسل الجسم')">عسل الجسم</li>
+                                <li onclick="showCategoryProducts('skin', 'body', 'مقشر الجسم')">مقشر الجسم</li>
+                                <li onclick="showCategoryProducts('skin', 'body', 'الصابون المغربي')">الصابون المغربي</li>
+                                <li onclick="showCategoryProducts('skin', 'body', 'مرطب الجسم')">مرطب الجسم</li>
+                                <li onclick="showCategoryProducts('skin', 'body', 'مزيل العرق')">مزيل العرق</li>
+                                <li onclick="showCategoryProducts('skin', 'body', 'العناية النسائية')">العناية النسائية</li>
+                                <li onclick="showCategoryProducts('skin', 'body', 'الزيوت')">الزيوت</li>
+                                <li onclick="showCategoryProducts('skin', 'body', 'بودرة الجسم')">بودرة الجسم</li>
+                                <li onclick="showCategoryProducts('skin', 'body', 'منتجات الحلاقة')">منتجات الحلاقة</li>
+                                <li onclick="showCategoryProducts('skin', 'body', 'غسول اليدين')">غسول اليدين</li>
+                                <li onclick="showCategoryProducts('skin', 'body', 'منتجات التشقير')">منتجات التشقير</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('skin', 'sun', 'واقي الشمس')">واقي الشمس</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('skin', 'sun', 'كريم واقي شمس')">كريم</li>
+                                <li onclick="showCategoryProducts('skin', 'sun', 'جل كريم واقي شمس')">جل كريم</li>
+                                <li onclick="showCategoryProducts('skin', 'sun', 'سائل واقي شمس')">سائل</li>
+                                <li onclick="showCategoryProducts('skin', 'sun', 'بخاخ واقي شمس')">بخاخ</li>
+                                <li onclick="showCategoryProducts('skin', 'sun', 'ستيك واقي شمس')">ستيك</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('skin', 'lip', 'العناية بالشفاة')">العناية بالشفاة</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('skin', 'lip', 'مرطب الشفاة')">مرطب الشفاة</li>
+                                <li onclick="showCategoryProducts('skin', 'lip', 'ماسك الشفاة')">ماسك الشفاة</li>
+                                <li onclick="showCategoryProducts('skin', 'lip', 'مقشر الشفاة')">مقشر الشفاة</li>
+                                <li onclick="showCategoryProducts('skin', 'lip', 'مكبر الشفاة')">مكبر الشفاة</li>
+                            </ul>
+                        </li>
+                        <li onclick="showCategoryProducts('skin', null, 'مجموعات العناية')">مجموعات العناية</li>
+                    </ul>
+                </div>
+                
+                <div class="dropdown-section">
+                    <h4>العناية بالشعر</h4>
+                    <ul>
+                        <li class="all-products-btn" onclick="showCategoryProducts('hair')"><img src="assets/icons/categories.svg" class="icon icon-white" alt="all"> جميع منتجات الشعر</li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('hair', 'shampoo', 'شامبو وبلسم الشعر')">شامبو وبلسم الشعر</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('hair', 'shampoo', 'شامبو')">شامبو</li>
+                                <li onclick="showCategoryProducts('hair', 'conditioner', 'بلسم')">بلسم</li>
+                                <li onclick="showCategoryProducts('hair', 'shampoo-conditioner', 'شامبو وبلسم معاً')">شامبو وبلسم معاً</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('hair', 'mask', 'ماسك الشعر وحمام الزيت')">ماسك الشعر وحمام الزيت</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('hair', 'mask', 'ماسك الشعر')">ماسك الشعر</li>
+                                <li onclick="showCategoryProducts('hair', 'oil-bath', 'حمام الزيت')">حمام الزيت</li>
+                                <li onclick="showCategoryProducts('hair', 'deep-mask', 'ماسك عميق')">ماسك عميق</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('hair', 'cream', 'كريم الشعر')">كريم الشعر</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('hair', 'cream', 'كريم تصفيف')">كريم تصفيف</li>
+                                <li onclick="showCategoryProducts('hair', 'cream', 'كريم ترطيب')">كريم ترطيب</li>
+                                <li onclick="showCategoryProducts('hair', 'cream', 'كريم فرد الشعر')">كريم فرد الشعر</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('hair', 'oil', 'زيت الشعر')">زيت الشعر</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('hair', 'oil', 'زيت الأرغان')">زيت الأرغان</li>
+                                <li onclick="showCategoryProducts('hair', 'oil', 'زيت جوز الهند')">زيت جوز الهند</li>
+                                <li onclick="showCategoryProducts('hair', 'oil', 'زيت الزيتون')">زيت الزيتون</li>
+                                <li onclick="showCategoryProducts('hair', 'oil', 'زيوت أخرى')">زيوت أخرى</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('hair', 'treatment', 'معالجات الشعر')">معالجات الشعر</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('hair', 'treatment', 'علاج التلف')">علاج التلف</li>
+                                <li onclick="showCategoryProducts('hair', 'treatment', 'علاج القشرة')">علاج القشرة</li>
+                                <li onclick="showCategoryProducts('hair', 'treatment', 'علاج تساقط الشعر')">علاج تساقط الشعر</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('hair', 'styling', 'مثبت ورغوة الشعر')">مثبت ورغوة الشعر</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('hair', 'styling', 'مثبت الشعر')">مثبت الشعر</li>
+                                <li onclick="showCategoryProducts('hair', 'styling', 'رغوة الشعر')">رغوة الشعر</li>
+                                <li onclick="showCategoryProducts('hair', 'styling', 'بودرة مثبتة')">بودرة مثبتة</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('hair', 'gel', 'جل الشعر')">جل الشعر</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('hair', 'gel', 'جل قوي')">جل قوي</li>
+                                <li onclick="showCategoryProducts('hair', 'gel', 'جل خفيف')">جل خفيف</li>
+                                <li onclick="showCategoryProducts('hair', 'gel', 'جل لامع')">جل لامع</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('hair', 'color', 'صبغات الشعر')">صبغات الشعر</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('hair', 'color', 'صبغات دائمة')">صبغات دائمة</li>
+                                <li onclick="showCategoryProducts('hair', 'color', 'صبغات مؤقتة')">صبغات مؤقتة</li>
+                                <li onclick="showCategoryProducts('hair', 'color', 'صبغات طبيعية')">صبغات طبيعية</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('hair', 'accessories', 'اكسسوارات وفرش الشعر')">اكسسوارات وفرش الشعر</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('hair', 'accessories', 'فرش الشعر')">فرش الشعر</li>
+                                <li onclick="showCategoryProducts('hair', 'accessories', 'مشط الشعر')">مشط الشعر</li>
+                                <li onclick="showCategoryProducts('hair', 'accessories', 'عصابات الشعر')">عصابات الشعر</li>
+                                <li onclick="showCategoryProducts('hair', 'accessories', 'اكسسوارات أخرى')">اكسسوارات أخرى</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="dropdown-section">
+                    <h4>المكياج</h4>
+                    <ul>
+                        <li class="all-products-btn" onclick="showCategoryProducts('makeup')"><img src="assets/icons/categories.svg" class="icon icon-white" alt="all"> جميع منتجات المكياج</li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('makeup', 'face', 'مكياج الوجه')">الوجه</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('makeup', 'face', 'كريم الأساس')">كريم الأساس</li>
+                                <li onclick="showCategoryProducts('makeup', 'face', 'كونسيلر')">كونسيلر</li>
+                                <li onclick="showCategoryProducts('makeup', 'face', 'بودرة الوجه')">بودرة الوجه</li>
+                                <li onclick="showCategoryProducts('makeup', 'face', 'برايمر الوجه')">برايمر الوجه</li>
+                                <li onclick="showCategoryProducts('makeup', 'face', 'مثبت المكياج')">مثبت المكياج</li>
+                                <li onclick="showCategoryProducts('makeup', 'face', 'بي بي كريم')">بي بي كريم</li>
+                                <li onclick="showCategoryProducts('makeup', 'face', 'مزيل المكياج')">مزيل المكياج</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('makeup', 'lips', 'مكياج الشفاة')">الشفاة</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('makeup', 'lips', 'أحمر الشفاة')">أحمر الشفاة</li>
+                                <li onclick="showCategoryProducts('makeup', 'lips', 'تنت الشفاة')">تنت الشفاة</li>
+                                <li onclick="showCategoryProducts('makeup', 'lips', 'ملمع الشفاة')">ملمع الشفاة</li>
+                                <li onclick="showCategoryProducts('makeup', 'lips', 'محددات الشفاة')">محددات الشفاة</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('makeup', 'eyes', 'مكياج العيون')">العيون</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('makeup', 'eyes', 'ماسكارا')">ماسكارا</li>
+                                <li onclick="showCategoryProducts('makeup', 'eyes', 'حجل')">حجل</li>
+                                <li onclick="showCategoryProducts('makeup', 'eyes', 'ظلال العيون')">ظلال العيون</li>
+                                <li onclick="showCategoryProducts('makeup', 'eyes', 'برايمر العيون')">برايمر العيون</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('makeup', 'eyebrows', 'مكياج الحواجب')">الحواجب</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('makeup', 'eyebrows', 'مسكرة الحواجب')">مسكرة الحواجب</li>
+                                <li onclick="showCategoryProducts('makeup', 'eyebrows', 'جل الحواجب')">جل الحواجب</li>
+                                <li onclick="showCategoryProducts('makeup', 'eyebrows', 'أقلام الحواجب')">أقلام الحواجب</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('makeup', 'cheeks', 'مكياج الخدود')">الخدود</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('makeup', 'cheeks', 'أحمر الخدود')">أحمر الخدود</li>
+                                <li onclick="showCategoryProducts('makeup', 'cheeks', 'كونتور')">كونتور</li>
+                                <li onclick="showCategoryProducts('makeup', 'cheeks', 'برونزر')">برونزر</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('makeup', 'highlighter', 'الهايلايتر')">الهايلايتر</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('makeup', 'highlighter', 'الهايلايتر البودرة')">الهايلايتر البودرة</li>
+                                <li onclick="showCategoryProducts('makeup', 'highlighter', 'الهايلايتر السائلة')">الهايلايتر السائلة</li>
+                                <li onclick="showCategoryProducts('makeup', 'highlighter', 'باليت ومجموعة هايلايتر')">باليت ومجموعة</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('makeup', 'brushes', 'فرش المكياج')">فرش المكياج</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('makeup', 'brushes', 'مجموعة فرش المكياج')">مجموعة فرش المكياج</li>
+                                <li onclick="showCategoryProducts('makeup', 'brushes', 'فرش الوجه')">فرش الوجه</li>
+                                <li onclick="showCategoryProducts('makeup', 'brushes', 'فرش العيون')">فرش العيون</li>
+                                <li onclick="showCategoryProducts('makeup', 'brushes', 'فرش الحواجب')">فرش الحواجب</li>
+                                <li onclick="showCategoryProducts('makeup', 'brushes', 'الإسفنج')">الإسفنج</li>
+                                <li onclick="showCategoryProducts('makeup', 'brushes', 'أدوات المكياج')">أدوات المكياج</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('makeup', 'nails', 'مكياج الأظافر')">الأظافر</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('makeup', 'nails', 'المناكير')">المناكير</li>
+                                <li onclick="showCategoryProducts('makeup', 'nails', 'مزيل المناكير')">مزيل المناكير</li>
+                            </ul>
+                        </li>
+                        <li onclick="showCategoryProducts('makeup', 'glue', 'غراء الرموش والأظافر')">غراء الرموش والأظافر</li>
+                    </ul>
+                </div>
+                
+                <div class="dropdown-section">
+                    <h4>الأجهزة</h4>
+                    <ul>
+                        <li class="all-products-btn" onclick="showCategoryProducts('devices')"><img src="assets/icons/categories.svg" class="icon icon-white" alt="all"> جميع الأجهزة</li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('devices', 'oral', 'أجهزة العناية بالفم')">أجهزة العناية بالفم</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('devices', 'oral', 'فرشاة أسنان كهربائية')">فرشاة أسنان كهربائية</li>
+                                <li onclick="showCategoryProducts('devices', 'oral', 'مبيض أسنان')">مبيض أسنان</li>
+                                <li onclick="showCategoryProducts('devices', 'oral', 'مزيل بلاك')">مزيل بلاك</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('devices', 'dryer', 'مجففات الشعر')">مجففات الشعر</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('devices', 'dryer', 'مجفف احترافي')">مجفف احترافي</li>
+                                <li onclick="showCategoryProducts('devices', 'dryer', 'مجفف منزلي')">مجفف منزلي</li>
+                                <li onclick="showCategoryProducts('devices', 'dryer', 'مجفف سفر')">مجفف سفر</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('devices', 'styling', 'أجهزة تمليس الشعر')">أجهزة تمليس الشعر</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('devices', 'styling', 'مكواة شعر')">مكواة شعر</li>
+                                <li onclick="showCategoryProducts('devices', 'styling', 'مكواة تجعيد')">مكواة تجعيد</li>
+                                <li onclick="showCategoryProducts('devices', 'styling', 'مجعد الشعر')">مجعد الشعر</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="dropdown-section">
+                    <h4>الأم والطفل</h4>
+                    <ul>
+                        <li class="all-products-btn" onclick="showCategoryProducts('baby')"><img src="assets/icons/categories.svg" class="icon icon-white" alt="all"> جميع منتجات الأم والطفل</li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('baby', 'mother', 'منتجات العناية بالأم')">منتجات العناية بالأم</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('baby', 'mother', 'كريمات الحمل')">كريمات الحمل</li>
+                                <li onclick="showCategoryProducts('baby', 'mother', 'مرطبات ما بعد الولادة')">مرطبات ما بعد الولادة</li>
+                                <li onclick="showCategoryProducts('baby', 'mother', 'عناية الثدي')">عناية الثدي</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('baby', 'child', 'منتجات العناية بالطفل')">منتجات العناية بالطفل</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('baby', 'child', 'شامبو الطفل')">شامبو الطفل</li>
+                                <li onclick="showCategoryProducts('baby', 'child', 'لوشن الطفل')">لوشن الطفل</li>
+                                <li onclick="showCategoryProducts('baby', 'child', 'زيت الطفل')">زيت الطفل</li>
+                                <li onclick="showCategoryProducts('baby', 'child', 'بودرة الطفل')">بودرة الطفل</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="dropdown-section">
+                    <h4>العطور</h4>
+                    <ul>
+                        <li class="all-products-btn" onclick="showCategoryProducts('perfume')"><img src="assets/icons/categories.svg" class="icon icon-white" alt="all"> جميع العطور</li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('perfume', 'women', 'عطور نسائية')">عطور نسائية</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('perfume', 'women', 'عطور شرقية')">عطور شرقية</li>
+                                <li onclick="showCategoryProducts('perfume', 'women', 'عطور غربية')">عطور غربية</li>
+                                <li onclick="showCategoryProducts('perfume', 'women', 'عطور فواكه')">عطور فواكه</li>
+                                <li onclick="showCategoryProducts('perfume', 'women', 'عطور زهور')">عطور زهور</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('perfume', 'men', 'عطور رجالية')">عطور رجالية</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('perfume', 'men', 'عطور كلاسيكية')">عطور كلاسيكية</li>
+                                <li onclick="showCategoryProducts('perfume', 'men', 'عطور رياضية')">عطور رياضية</li>
+                                <li onclick="showCategoryProducts('perfume', 'men', 'عطور عصرية')">عطور عصرية</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="dropdown-section">
+                    <h4>العدسات</h4>
+                    <ul>
+                        <li class="all-products-btn" onclick="showCategoryProducts('lenses')"><img src="assets/icons/categories.svg" class="icon icon-white" alt="all"> جميع العدسات</li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('lenses', 'daily', 'عدسات يومية')">عدسات يومية</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('lenses', 'daily', 'عدسات يومية ملونة')">عدسات ملونة</li>
+                                <li onclick="showCategoryProducts('lenses', 'daily', 'عدسات يومية طبية')">عدسات طبية</li>
+                                <li onclick="showCategoryProducts('lenses', 'daily', 'عدسات يومية تصحيحية')">عدسات تصحيحية</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('lenses', 'monthly', 'عدسات شهرية')">عدسات شهرية</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('lenses', 'monthly', 'عدسات شهرية ملونة')">عدسات ملونة</li>
+                                <li onclick="showCategoryProducts('lenses', 'monthly', 'عدسات شهرية طبية')">عدسات طبية</li>
+                                <li onclick="showCategoryProducts('lenses', 'monthly', 'عدسات شهرية تصحيحية')">عدسات تصحيحية</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('lenses', 'yearly', 'عدسات سنوية')">عدسات سنوية</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('lenses', 'yearly', 'عدسات سنوية ملونة')">عدسات ملونة</li>
+                                <li onclick="showCategoryProducts('lenses', 'yearly', 'عدسات سنوية طبية')">عدسات طبية</li>
+                                <li onclick="showCategoryProducts('lenses', 'yearly', 'عدسات سنوية تصحيحية')">عدسات تصحيحية</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('lenses', 'solution', 'محلول العدسات')">محلول العدسات</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('lenses', 'solution', 'محلول تنظيف')">محلول تنظيف</li>
+                                <li onclick="showCategoryProducts('lenses', 'solution', 'محلول ترطيب')">محلول ترطيب</li>
+                                <li onclick="showCategoryProducts('lenses', 'solution', 'قطرات العدسات')">قطرات العدسات</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="dropdown-section">
+                    <h4>المكملات الغذائية</h4>
+                    <ul>
+                        <li class="all-products-btn" onclick="showCategoryProducts('supplements')"><img src="assets/icons/categories.svg" class="icon icon-white" alt="all"> جميع المكملات الغذائية</li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('supplements', 'beauty', 'مكملات الجمال')">مكملات الجمال</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('supplements', 'beauty', 'كولاجين')">كولاجين</li>
+                                <li onclick="showCategoryProducts('supplements', 'beauty', 'بيوتين')">بيوتين</li>
+                                <li onclick="showCategoryProducts('supplements', 'beauty', 'فيتامين E')">فيتامين E</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('supplements', 'vitamins', 'فيتامينات')">فيتامينات</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('supplements', 'vitamins', 'فيتامين C')">فيتامين C</li>
+                                <li onclick="showCategoryProducts('supplements', 'vitamins', 'فيتامين D')">فيتامين D</li>
+                                <li onclick="showCategoryProducts('supplements', 'vitamins', 'فيتامينات متعددة')">فيتامينات متعددة</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('supplements', 'minerals', 'معادن')">معادن</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('supplements', 'minerals', 'زنك')">زنك</li>
+                                <li onclick="showCategoryProducts('supplements', 'minerals', 'حديد')">حديد</li>
+                                <li onclick="showCategoryProducts('supplements', 'minerals', 'كالسيوم')">كالسيوم</li>
+                                <li onclick="showCategoryProducts('supplements', 'minerals', 'مغنيسيوم')">مغنيسيوم</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="dropdown-section">
+                    <h4>أدوات العناية</h4>
+                    <ul>
+                        <li class="all-products-btn" onclick="showCategoryProducts('tools')"><img src="assets/icons/categories.svg" class="icon icon-white" alt="all"> جميع أدوات العناية</li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('tools', 'face', 'أدوات العناية بالوجه')">أدوات العناية بالوجه</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('tools', 'face', 'فرشاة تنظيف الوجه')">فرشاة تنظيف الوجه</li>
+                                <li onclick="showCategoryProducts('tools', 'face', 'رولر الوجه')">رولر الوجه</li>
+                                <li onclick="showCategoryProducts('tools', 'face', 'أدوات إزالة الرؤوس السوداء')">أدوات إزالة الرؤوس السوداء</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('tools', 'body', 'أدوات العناية بالجسم')">أدوات العناية بالجسم</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('tools', 'body', 'قفازات تقشير')">قفازات تقشير</li>
+                                <li onclick="showCategoryProducts('tools', 'body', 'لوفة')">لوفة</li>
+                                <li onclick="showCategoryProducts('tools', 'body', 'حجر الخفاف')">حجر الخفاف</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('tools', 'hands', 'أدوات العناية باليدين والأظافر')">أدوات العناية باليدين والأظافر</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('tools', 'hands', 'مبرد الأظافر')">مبرد الأظافر</li>
+                                <li onclick="showCategoryProducts('tools', 'hands', 'قصافة الأظافر')">قصافة الأظافر</li>
+                                <li onclick="showCategoryProducts('tools', 'hands', 'أدوات العناية بالأظافر')">أدوات العناية بالأظافر</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('tools', 'feet', 'أدوات العناية بالقدمين')">أدوات العناية بالقدمين</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('tools', 'feet', 'حجر القدم')">حجر القدم</li>
+                                <li onclick="showCategoryProducts('tools', 'feet', 'مبرد القدم')">مبرد القدم</li>
+                                <li onclick="showCategoryProducts('tools', 'feet', 'أدوات العناية بالقدم')">أدوات العناية بالقدم</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('tools', 'hair', 'أدوات العناية بالشعر')">أدوات العناية بالشعر</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('tools', 'hair', 'فرشاة الشعر')">فرشاة الشعر</li>
+                                <li onclick="showCategoryProducts('tools', 'hair', 'مشط الشعر')">مشط الشعر</li>
+                                <li onclick="showCategoryProducts('tools', 'hair', 'عصابات الشعر')">عصابات الشعر</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="dropdown-section">
+                    <h4>معطرات المنزل</h4>
+                    <ul>
+                        <li class="all-products-btn" onclick="showCategoryProducts('home')"><img src="assets/icons/categories.svg" class="icon icon-white" alt="all"> جميع معطرات المنزل</li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('home', 'incense', 'البخور والمعمول')">البخور والمعمول</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('home', 'incense', 'بخور عود')">بخور عود</li>
+                                <li onclick="showCategoryProducts('home', 'incense', 'بخور بخور')">بخور بخور</li>
+                                <li onclick="showCategoryProducts('home', 'incense', 'معمول')">معمول</li>
+                                <li onclick="showCategoryProducts('home', 'incense', 'مبخر')">مبخر</li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <span class="submenu-label" onclick="showCategoryProducts('home', 'air-freshener', 'معطرات الجو')">معطرات الجو</span>
+                            <img src="assets/icons/arrow-left.svg" class="icon icon-sm" alt="arrow">
+                            <ul class="submenu">
+                                <li onclick="showCategoryProducts('home', 'air-freshener', 'بخاخ معطر')">بخاخ معطر</li>
+                                <li onclick="showCategoryProducts('home', 'air-freshener', 'جهاز معطر')">جهاز معطر</li>
+                                <li onclick="showCategoryProducts('home', 'air-freshener', 'شموع عطرية')">شموع عطرية</li>
+                                <li onclick="showCategoryProducts('home', 'air-freshener', 'أحجار عطرية')">أحجار عطرية</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Page -->
+        <div class="page" id="homePage">
+            <!-- Hero Slider -->
+            <section class="hero-slider">
+                <div class="slider-container">
+                    <button class="slider-arrow prev" onclick="prevSlide()">
+                        <img src="assets/icons/arrow-right.svg" class="icon" alt="arrow">
+                    </button>
+                    <div class="slider-wrapper" id="sliderWrapper">
+                        <div class="slide">
+                            <img src="assets/images/placeholder.png" alt="إعلان 1">
+                        </div>
+                        <div class="slide">
+                            <img src="assets/images/placeholder.png" alt="إعلان 2">
+                        </div>
+                        <div class="slide">
+                            <img src="assets/images/placeholder.png" alt="إعلان 3">
+                        </div>
+                    </div>
+                    <button class="slider-arrow next" onclick="nextSlide()">
+                        <img src="assets/icons/arrow-left.svg" class="icon" alt="arrow">
+                    </button>
+                </div>
+            </section>
+
+            <!-- Shop by Category -->
+            <section class="shop-by-section">
+                <div class="section-header">
+                    <h2>تسوق حسب الفئة</h2>
+                </div>
+                <div class="scroll-container">
+                    <button class="scroll-arrow scroll-left" onclick="scrollContainer('categoryContainer', -1)">
+                        <img src="assets/icons/arrow-right.svg" class="icon" alt="arrow">
+                    </button>
+                    <div class="scroll-content" id="categoryContainer">
+                        <div class="category-item" onclick="showShopByCategory('العناية بالبشرة', 'العناية بالبشرة')">
+                            <div class="category-circle">
+                                <img src="assets/images/placeholder.png" alt="العناية بالبشرة">
+                            </div>
+                            <span>العناية بالبشرة</span>
+                        </div>
+                        <div class="category-item" onclick="showShopByCategory('العناية بالشعر', 'العناية بالشعر')">
+                            <div class="category-circle">
+                                <img src="assets/images/placeholder.png" alt="العناية بالشعر">
+                            </div>
+                            <span>العناية بالشعر</span>
+                        </div>
+                        <div class="category-item" onclick="showShopByCategory('المكياج', 'المكياج')">
+                            <div class="category-circle">
+                                <img src="assets/images/placeholder.png" alt="المكياج">
+                            </div>
+                            <span>المكياج</span>
+                        </div>
+                        <div class="category-item" onclick="showShopByCategory('الأجهزة', 'الأجهزة')">
+                            <div class="category-circle">
+                                <img src="assets/images/placeholder.png" alt="الأجهزة">
+                            </div>
+                            <span>الأجهزة</span>
+                        </div>
+                        <div class="category-item" onclick="showShopByCategory('الأم والطفل', 'الأم والطفل')">
+                            <div class="category-circle">
+                                <img src="assets/images/placeholder.png" alt="الأم والطفل">
+                            </div>
+                            <span>الأم والطفل</span>
+                        </div>
+                        <div class="category-item" onclick="showShopByCategory('العطور', 'العطور')">
+                            <div class="category-circle">
+                                <img src="assets/images/placeholder.png" alt="العطور">
+                            </div>
+                            <span>العطور</span>
+                        </div>
+                        <div class="category-item" onclick="showShopByCategory('العدسات', 'العدسات')">
+                            <div class="category-circle">
+                                <img src="assets/images/placeholder.png" alt="العدسات">
+                            </div>
+                            <span>العدسات</span>
+                        </div>
+                        <div class="category-item" onclick="showShopByCategory('المكملات الغذائية', 'المكملات الغذائية')">
+                            <div class="category-circle">
+                                <img src="assets/images/placeholder.png" alt="المكملات الغذائية">
+                            </div>
+                            <span>المكملات الغذائية</span>
+                        </div>
+                        <div class="category-item" onclick="showShopByCategory('أدوات العناية', 'أدوات العناية')">
+                            <div class="category-circle">
+                                <img src="assets/images/placeholder.png" alt="أدوات العناية">
+                            </div>
+                            <span>أدوات العناية</span>
+                        </div>
+                        <div class="category-item" onclick="showShopByCategory('معطرات المنزل', 'معطرات المنزل')">
+                            <div class="category-circle">
+                                <img src="assets/images/placeholder.png" alt="معطرات المنزل">
+                            </div>
+                            <span>معطرات المنزل</span>
+                        </div>
+                    </div>
+                    <button class="scroll-arrow scroll-right" onclick="scrollContainer('categoryContainer', 1)">
+                        <img src="assets/icons/arrow-left.svg" class="icon" alt="arrow">
+                    </button>
+                </div>
+            </section>
+
+            <!-- Shop by Brand -->
+            <section class="shop-by-section">
+                <div class="section-header">
+                    <h2>تسوق حسب الماركة</h2>
+                </div>
+                <div class="scroll-container">
+                    <button class="scroll-arrow scroll-left" onclick="scrollContainer('brandContainer', -1)">
+                        <img src="assets/icons/arrow-right.svg" class="icon" alt="arrow">
+                    </button>
+                    <div class="scroll-content" id="brandContainer">
+                        <div class="brand-item" onclick="showBrandProducts(1)">
+                            <div class="brand-circle">
+                                <img src="assets/images/placeholder.png" alt="لوريال">
+                            </div>
+                            <span>لوريال</span>
+                        </div>
+                        <div class="brand-item" onclick="showBrandProducts(2)">
+                            <div class="brand-circle">
+                                <img src="assets/images/placeholder.png" alt="مايبلين">
+                            </div>
+                            <span>مايبلين</span>
+                        </div>
+                        <div class="brand-item" onclick="showBrandProducts(3)">
+                            <div class="brand-circle">
+                                <img src="assets/images/placeholder.png" alt="نيكيا">
+                            </div>
+                            <span>نيكيا</span>
+                        </div>
+                        <div class="brand-item" onclick="showBrandProducts(4)">
+                            <div class="brand-circle">
+                                <img src="assets/images/placeholder.png" alt="دوف">
+                            </div>
+                            <span>دوف</span>
+                        </div>
+                        <div class="brand-item" onclick="showBrandProducts(5)">
+                            <div class="brand-circle">
+                                <img src="assets/images/placeholder.png" alt="جونسون">
+                            </div>
+                            <span>جونسون</span>
+                        </div>
+                    </div>
+                    <button class="scroll-arrow scroll-right" onclick="scrollContainer('brandContainer', 1)">
+                        <img src="assets/icons/arrow-left.svg" class="icon" alt="arrow">
+                    </button>
+                </div>
+            </section>
+
+
+            <!-- Shop by Skin Type -->
+            <section class="shop-by-section">
+                <div class="section-header">
+                    <h2>تسوق حسب البشرة</h2>
+                </div>
+                <div class="skin-types-grid">
+                    <button class="skin-type-btn" onclick="showSkinTypeProducts('dry', 'بشرة جافة')">
+                        <div class="skin-type-icon">
+                            <img src="assets/images/placeholder.png" alt="بشرة جافة">
+                        </div>
+                        <span>بشرة جافة</span>
+                    </button>
+                    <button class="skin-type-btn" onclick="showSkinTypeProducts('oily', 'البشرة المختلطة والدهنية')">
+                        <div class="skin-type-icon">
+                            <img src="assets/images/placeholder.png" alt="البشرة المختلطة والدهنية">
+                        </div>
+                        <span>البشرة المختلطة والدهنية</span>
+                    </button>
+                    <button class="skin-type-btn" onclick="showSkinTypeProducts('sensitive', 'بشرة حساسة')">
+                        <div class="skin-type-icon">
+                            <img src="assets/images/placeholder.png" alt="بشرة حساسة">
+                        </div>
+                        <span>بشرة حساسة</span>
+                    </button>
+                    <button class="skin-type-btn" onclick="showSkinTypeProducts('firming', 'شد ونظارة البشرة')">
+                        <div class="skin-type-icon">
+                            <img src="assets/images/placeholder.png" alt="شد ونظارة البشرة">
+                        </div>
+                        <span>شد ونظارة البشرة</span>
+                    </button>
+                    <button class="skin-type-btn" onclick="showSkinTypeProducts('damaged', 'البشرة المتضررة')">
+                        <div class="skin-type-icon">
+                            <img src="assets/images/placeholder.png" alt="البشرة المتضررة">
+                        </div>
+                        <span>البشرة المتضررة</span>
+                    </button>
+                    <button class="skin-type-btn" onclick="showSkinTypeProducts('acne', 'منتجات حب الشباب')">
+                        <div class="skin-type-icon">
+                            <img src="assets/images/placeholder.png" alt="منتجات حب الشباب">
+                        </div>
+                        <span>منتجات حب الشباب</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Featured Images Section -->
+            <section class="featured-images-section">
+                <div class="featured-images-container">
+                    <div class="featured-image-item">
+                        <img src="assets/images/placeholder.png" alt="منتج 1">
+                    </div>
+                    <div class="featured-image-item">
+                        <img src="assets/images/placeholder.png" alt="منتج 2">
+                    </div>
+                    <div class="featured-image-item">
+                        <img src="assets/images/placeholder.png" alt="منتج 3">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Product Sections -->
+            <section class="product-section">
+                <div class="section-header">
+                    <h2>العناية بالبشرة</h2>
+                    <a href="#" class="view-all" onclick="showCategoryProducts('skin', null, 'العناية بالبشرة')">عرض الكل</a>
+                </div>
+                <div class="product-scroll-container">
+                    <button class="scroll-arrow scroll-left" onclick="scrollContainer('skinProducts', -1)">
+                        <img src="assets/icons/arrow-right.svg" class="icon" alt="arrow">
+                    </button>
+                    <div class="products-scroll-content" id="skinProducts">
+                        <!-- Products will be loaded dynamically -->
+                    </div>
+                    <button class="scroll-arrow scroll-right" onclick="scrollContainer('skinProducts', 1)">
+                        <img src="assets/icons/arrow-left.svg" class="icon" alt="arrow">
+                    </button>
+                </div>
+            </section>
+
+            <section class="product-section">
+                <div class="section-header">
+                    <h2>العناية بالشعر</h2>
+                    <a href="#" class="view-all" onclick="showCategoryProducts('hair', null, 'العناية بالشعر')">عرض الكل</a>
+                </div>
+                <div class="product-scroll-container">
+                    <button class="scroll-arrow scroll-left" onclick="scrollContainer('hairProducts', -1)">
+                        <img src="assets/icons/arrow-right.svg" class="icon" alt="arrow">
+                    </button>
+                    <div class="products-scroll-content" id="hairProducts">
+                        <!-- Products will be loaded dynamically -->
+                    </div>
+                    <button class="scroll-arrow scroll-right" onclick="scrollContainer('hairProducts', 1)">
+                        <img src="assets/icons/arrow-left.svg" class="icon" alt="arrow">
+                    </button>
+                </div>
+            </section>
+
+            <section class="product-section">
+                <div class="section-header">
+                    <h2>المكياج</h2>
+                    <a href="#" class="view-all" onclick="showCategoryProducts('makeup', null, 'المكياج')">عرض الكل</a>
+                </div>
+                <div class="product-scroll-container">
+                    <button class="scroll-arrow scroll-left" onclick="scrollContainer('makeupProducts', -1)">
+                        <img src="assets/icons/arrow-right.svg" class="icon" alt="arrow">
+                    </button>
+                    <div class="products-scroll-content" id="makeupProducts">
+                        <!-- Products will be loaded dynamically -->
+                    </div>
+                    <button class="scroll-arrow scroll-right" onclick="scrollContainer('makeupProducts', 1)">
+                        <img src="assets/icons/arrow-left.svg" class="icon" alt="arrow">
+                    </button>
+                </div>
+            </section>
+
+            <section class="product-section">
+                <div class="section-header">
+                    <h2>الأجهزة</h2>
+                    <a href="#" class="view-all" onclick="showCategoryProducts('devices', null, 'الأجهزة')">عرض الكل</a>
+                </div>
+                <div class="product-scroll-container">
+                    <button class="scroll-arrow scroll-left" onclick="scrollContainer('devicesProducts', -1)">
+                        <img src="assets/icons/arrow-right.svg" class="icon" alt="arrow">
+                    </button>
+                    <div class="products-scroll-content" id="devicesProducts">
+                        <!-- Products will be loaded dynamically -->
+                    </div>
+                    <button class="scroll-arrow scroll-right" onclick="scrollContainer('devicesProducts', 1)">
+                        <img src="assets/icons/arrow-left.svg" class="icon" alt="arrow">
+                    </button>
+                </div>
+            </section>
+
+            <section class="product-section">
+                <div class="section-header">
+                    <h2>الأم والطفل</h2>
+                    <a href="#" class="view-all" onclick="showCategoryProducts('baby', null, 'الأم والطفل')">عرض الكل</a>
+                </div>
+                <div class="product-scroll-container">
+                    <button class="scroll-arrow scroll-left" onclick="scrollContainer('babyProducts', -1)">
+                        <img src="assets/icons/arrow-right.svg" class="icon" alt="arrow">
+                    </button>
+                    <div class="products-scroll-content" id="babyProducts">
+                        <!-- Products will be loaded dynamically -->
+                    </div>
+                    <button class="scroll-arrow scroll-right" onclick="scrollContainer('babyProducts', 1)">
+                        <img src="assets/icons/arrow-left.svg" class="icon" alt="arrow">
+                    </button>
+                </div>
+            </section>
+
+            <section class="product-section">
+                <div class="section-header">
+                    <h2>العطور</h2>
+                    <a href="#" class="view-all" onclick="showCategoryProducts('perfume', null, 'العطور')">عرض الكل</a>
+                </div>
+                <div class="product-scroll-container">
+                    <button class="scroll-arrow scroll-left" onclick="scrollContainer('perfumeProducts', -1)">
+                        <img src="assets/icons/arrow-right.svg" class="icon" alt="arrow">
+                    </button>
+                    <div class="products-scroll-content" id="perfumeProducts">
+                        <!-- Products will be loaded dynamically -->
+                    </div>
+                    <button class="scroll-arrow scroll-right" onclick="scrollContainer('perfumeProducts', 1)">
+                        <img src="assets/icons/arrow-left.svg" class="icon" alt="arrow">
+                    </button>
+                </div>
+            </section>
+
+            <section class="product-section">
+                <div class="section-header">
+                    <h2>العدسات</h2>
+                    <a href="#" class="view-all" onclick="showCategoryProducts('lenses', null, 'العدسات')">عرض الكل</a>
+                </div>
+                <div class="product-scroll-container">
+                    <button class="scroll-arrow scroll-left" onclick="scrollContainer('lensesProducts', -1)">
+                        <img src="assets/icons/arrow-right.svg" class="icon" alt="arrow">
+                    </button>
+                    <div class="products-scroll-content" id="lensesProducts">
+                        <!-- Products will be loaded dynamically -->
+                    </div>
+                    <button class="scroll-arrow scroll-right" onclick="scrollContainer('lensesProducts', 1)">
+                        <img src="assets/icons/arrow-left.svg" class="icon" alt="arrow">
+                    </button>
+                </div>
+            </section>
+
+            <section class="product-section">
+                <div class="section-header">
+                    <h2>المكملات الغذائية</h2>
+                    <a href="#" class="view-all" onclick="showCategoryProducts('supplements', null, 'المكملات الغذائية')">عرض الكل</a>
+                </div>
+                <div class="product-scroll-container">
+                    <button class="scroll-arrow scroll-left" onclick="scrollContainer('supplementsProducts', -1)">
+                        <img src="assets/icons/arrow-right.svg" class="icon" alt="arrow">
+                    </button>
+                    <div class="products-scroll-content" id="supplementsProducts">
+                        <!-- Products will be loaded dynamically -->
+                    </div>
+                    <button class="scroll-arrow scroll-right" onclick="scrollContainer('supplementsProducts', 1)">
+                        <img src="assets/icons/arrow-left.svg" class="icon" alt="arrow">
+                    </button>
+                </div>
+            </section>
+
+            <section class="product-section">
+                <div class="section-header">
+                    <h2>أدوات العناية</h2>
+                    <a href="#" class="view-all" onclick="showCategoryProducts('tools', null, 'أدوات العناية')">عرض الكل</a>
+                </div>
+                <div class="product-scroll-container">
+                    <button class="scroll-arrow scroll-left" onclick="scrollContainer('toolsProducts', -1)">
+                        <img src="assets/icons/arrow-right.svg" class="icon" alt="arrow">
+                    </button>
+                    <div class="products-scroll-content" id="toolsProducts">
+                        <!-- Products will be loaded dynamically -->
+                    </div>
+                    <button class="scroll-arrow scroll-right" onclick="scrollContainer('toolsProducts', 1)">
+                        <img src="assets/icons/arrow-left.svg" class="icon" alt="arrow">
+                    </button>
+                </div>
+            </section>
+
+            <section class="product-section">
+                <div class="section-header">
+                    <h2>معطرات المنزل</h2>
+                    <a href="#" class="view-all" onclick="showCategoryProducts('home', null, 'معطرات المنزل')">عرض الكل</a>
+                </div>
+                <div class="product-scroll-container">
+                    <button class="scroll-arrow scroll-left" onclick="scrollContainer('homeProducts', -1)">
+                        <img src="assets/icons/arrow-right.svg" class="icon" alt="arrow">
+                    </button>
+                    <div class="products-scroll-content" id="homeProducts">
+                        <!-- Products will be loaded dynamically -->
+                    </div>
+                    <button class="scroll-arrow scroll-right" onclick="scrollContainer('homeProducts', 1)">
+                        <img src="assets/icons/arrow-left.svg" class="icon" alt="arrow">
+                    </button>
+                </div>
+            </section>
+
+            <!-- Why Choose Us -->
+            <section class="why-choose-us">
+                <div class="section-header-box">
+                    <h2>ليش تختارنا؟</h2>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-box">
+                        <img src="assets/icons/certificate.svg" class="icon" alt="certified">
+                        <h3>منتجات أصلية ومضمونة</h3>
+                    </div>
+                    <div class="feature-box">
+                        <img src="assets/icons/offers.svg" class="icon" alt="offers">
+                        <h3>أسعارنا تنافسية</h3>
+                    </div>
+                    <div class="feature-box">
+                        <img src="assets/icons/truck.svg" class="icon" alt="truck">
+                        <h3>تصلك منتجاتنا أينما كنت بالوقت المناسب</h3>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Need Help -->
+            <section class="need-help">
+                <div class="section-header-box">
+                    <h2>هل تحتاج المساعدة؟</h2>
+                </div>
+                <div class="help-icons">
+                    <div class="help-icon" onclick="showPopup('order')">
+                        <img src="assets/icons/cart.svg" class="icon" alt="cart">
+                        <span>كيفية الطلب</span>
+                    </div>
+                    <div class="help-icon" onclick="showPopup('shipping')">
+                        <img src="assets/icons/truck.svg" class="icon" alt="shipping">
+                        <span>التوصيل والشحن</span>
+                    </div>
+                    <div class="help-icon" onclick="showPopup('return')">
+                        <img src="assets/icons/undo.svg" class="icon" alt="return">
+                        <span>الاستبدال والاسترجاع</span>
+                    </div>
+                    <div class="help-icon" onclick="openEmail()">
+                        <img src="assets/icons/email.svg" class="icon" alt="email">
+                        <span>البريد الإلكتروني</span>
+                    </div>
+                    <div class="help-icon" onclick="openWhatsApp()">
+                        <img src="assets/icons/whatsapp.svg" class="icon" alt="whatsapp">
+                        <span>الاتصال</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Follow Us -->
+            <section class="follow-us">
+                <div class="section-header-box">
+                    <h2>تابعونا</h2>
+                </div>
+                <div class="social-icons">
+                    <a href="#" target="_blank" class="social-icon">
+                        <img src="assets/icons/facebook.svg" class="icon" alt="facebook">
+                    </a>
+                    <a href="#" target="_blank" class="social-icon">
+                        <img src="assets/icons/twitter.svg" class="icon" alt="twitter">
+                    </a>
+                    <a href="#" target="_blank" class="social-icon">
+                        <img src="assets/icons/instagram.svg" class="icon" alt="instagram">
+                    </a>
+                    <a href="#" target="_blank" class="social-icon">
+                        <img src="assets/icons/tiktok.svg" class="icon" alt="tiktok">
+                    </a>
+                    <a href="#" target="_blank" class="social-icon">
+                        <img src="assets/icons/whatsapp.svg" class="icon" alt="whatsapp">
+                    </a>
+                    <a href="#" target="_blank" class="social-icon">
+                        <img src="assets/icons/snapchat.svg" class="icon" alt="snapchat">
+                    </a>
+                </div>
+            </section>
+        </div>
+
+        <!-- All Categories Page -->
+        <div class="page hidden" id="allCategoriesPage">
+            <div class="breadcrumb">
+                <a href="#" onclick="navigateTo('home')">الرئيسية</a>
+                <span>/</span>
+                <span>جميع الأقسام</span>
+            </div>
+            <div class="page-header">
+                <h1>جميع الأقسام</h1>
+            </div>
+            <div class="filter-section">
+                <select class="filter-select" onchange="filterProducts(this.value)">
+                    <option value="new">الجديد</option>
+                    <option value="popular">الأكثر شعبية</option>
+                    <option value="sale">العروض</option>
+                    <option value="price-high">السعر الأعلى فالأقل</option>
+                    <option value="price-low">السعر الأقل فالأعلى</option>
+                </select>
+            </div>
+            <div class="products-grid" id="allCategoriesProducts">
+                <!-- Products will be loaded dynamically -->
+            </div>
+            <div class="pagination">
+                <button class="pagination-btn active">1</button>
+                <button class="pagination-btn">2</button>
+                <button class="pagination-btn">3</button>
+                <button class="pagination-btn">4</button>
+            </div>
+
+            <!-- Why Choose Us -->
+            <section class="why-choose-us">
+                <div class="section-header-box">
+                    <h2>ليش تختارنا؟</h2>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-box">
+                        <img src="assets/icons/certificate.svg" class="icon" alt="certified">
+                        <h3>منتجات أصلية ومضمونة</h3>
+                    </div>
+                    <div class="feature-box">
+                        <img src="assets/icons/offers.svg" class="icon" alt="offers">
+                        <h3>أسعارنا تنافسية</h3>
+                    </div>
+                    <div class="feature-box">
+                        <img src="assets/icons/truck.svg" class="icon" alt="truck">
+                        <h3>تصلك منتجاتنا أينما كنت بالوقت المناسب</h3>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Need Help -->
+            <section class="need-help">
+                <div class="section-header-box">
+                    <h2>هل تحتاج المساعدة؟</h2>
+                </div>
+                <div class="help-icons">
+                    <div class="help-icon" onclick="showPopup('order')">
+                        <img src="assets/icons/cart.svg" class="icon" alt="cart">
+                        <span>كيفية الطلب</span>
+                    </div>
+                    <div class="help-icon" onclick="showPopup('shipping')">
+                        <img src="assets/icons/truck.svg" class="icon" alt="shipping">
+                        <span>التوصيل والشحن</span>
+                    </div>
+                    <div class="help-icon" onclick="showPopup('return')">
+                        <img src="assets/icons/undo.svg" class="icon" alt="return">
+                        <span>الاستبدال والاسترجاع</span>
+                    </div>
+                    <div class="help-icon" onclick="openEmail()">
+                        <img src="assets/icons/email.svg" class="icon" alt="email">
+                        <span>البريد الإلكتروني</span>
+                    </div>
+                    <div class="help-icon" onclick="openWhatsApp()">
+                        <img src="assets/icons/whatsapp.svg" class="icon" alt="whatsapp">
+                        <span>الاتصال</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Follow Us -->
+            <section class="follow-us">
+                <div class="section-header-box">
+                    <h2>تابعونا</h2>
+                </div>
+                <div class="social-icons">
+                    <a href="#" target="_blank" class="social-icon">
+                        <img src="assets/icons/facebook.svg" class="icon" alt="facebook">
+                    </a>
+                    <a href="#" target="_blank" class="social-icon">
+                        <img src="assets/icons/twitter.svg" class="icon" alt="twitter">
+                    </a>
+                    <a href="#" target="_blank" class="social-icon">
+                        <img src="assets/icons/instagram.svg" class="icon" alt="instagram">
+                    </a>
+                    <a href="#" target="_blank" class="social-icon">
+                        <img src="assets/icons/tiktok.svg" class="icon" alt="tiktok">
+                    </a>
+                    <a href="#" target="_blank" class="social-icon">
+                        <img src="assets/icons/whatsapp.svg" class="icon" alt="whatsapp">
+                    </a>
+                    <a href="#" target="_blank" class="social-icon">
+                        <img src="assets/icons/snapchat.svg" class="icon" alt="snapchat">
+                    </a>
+                </div>
+            </section>
+        </div>
+
+        <!-- Brands Page -->
+        <div class="page hidden" id="brandsPage">
+            <div class="breadcrumb">
+                <a href="#" onclick="navigateTo('home')">الرئيسية</a>
+                <span>/</span>
+                <span id="brandsBreadcrumb">الماركات</span>
+            </div>
+            <div class="page-header">
+                <h1 id="brandsPageTitle">الماركات</h1>
+                <h2 id="brandsPageSubtitle">جميع الماركات</h2>
+            </div>
+
+            <!-- قائمة الماركات -->
+            <div id="brandsListSection">
+                <div class="filter-section">
+                    <select class="filter-select" onchange="filterBrands(this.value)">
+                        <option value="all">الجميع</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                    </select>
+                </div>
+                <div class="brands-grid" id="brandsGrid">
+                    <!-- Brands will be loaded dynamically -->
+                </div>
+            </div>
+
+            <!-- منتجات الماركة المحددة (مخفية في البداية) -->
+            <div id="brandProductsSection" class="hidden">
+                <div style="padding: 10px 30px 20px; display: flex; align-items: center; gap: 12px;">
+                    <button onclick="backToBrandsList()" style="background: none; border: none; font-size: 22px; cursor: pointer; color: var(--primary-color);">
+                        <img src="assets/icons/arrow-right.svg" class="icon" alt="back">
+                    </button>
+                    <h2 id="brandProductsTitle" style="font-size: 20px; font-weight: 700; color: var(--text-primary);"></h2>
+                </div>
+                <div class="products-grid" id="brandProductsGrid">
+                    <!-- Brand products loaded dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Skin Page -->
+        <div class="page hidden" id="skinPage">
+            <div class="breadcrumb">
+                <a href="#" onclick="navigateTo('home')">الرئيسية</a>
+                <span>/</span>
+                <span id="skinBreadcrumb">العناية بالبشرة</span>
+            </div>
+            <div class="page-header">
+                <h1 id="skinPageTitle">العناية بالبشرة</h1>
+            </div>
+
+            <!-- شبكة أنواع البشرة -->
+            <div id="skinTypesSection">
+                <div class="skin-types-grid" style="padding: 0 30px 30px;">
+                    <button class="skin-type-btn" onclick="showSkinTypeProducts('dry', 'بشرة جافة')">
+                        <div class="skin-type-icon">
+                            <img src="assets/images/placeholder.png" alt="بشرة جافة">
+                        </div>
+                        <span>بشرة جافة</span>
+                    </button>
+                    <button class="skin-type-btn" onclick="showSkinTypeProducts('oily', 'البشرة المختلطة والدهنية')">
+                        <div class="skin-type-icon">
+                            <img src="assets/images/placeholder.png" alt="البشرة المختلطة والدهنية">
+                        </div>
+                        <span>البشرة المختلطة والدهنية</span>
+                    </button>
+                    <button class="skin-type-btn" onclick="showSkinTypeProducts('sensitive', 'بشرة حساسة')">
+                        <div class="skin-type-icon">
+                            <img src="assets/images/placeholder.png" alt="بشرة حساسة">
+                        </div>
+                        <span>بشرة حساسة</span>
+                    </button>
+                    <button class="skin-type-btn" onclick="showSkinTypeProducts('firming', 'شد ونظارة البشرة')">
+                        <div class="skin-type-icon">
+                            <img src="assets/images/placeholder.png" alt="شد ونظارة البشرة">
+                        </div>
+                        <span>شد ونظارة البشرة</span>
+                    </button>
+                    <button class="skin-type-btn" onclick="showSkinTypeProducts('damaged', 'البشرة المتضررة')">
+                        <div class="skin-type-icon">
+                            <img src="assets/images/placeholder.png" alt="البشرة المتضررة">
+                        </div>
+                        <span>البشرة المتضررة</span>
+                    </button>
+                    <button class="skin-type-btn" onclick="showSkinTypeProducts('acne', 'منتجات حب الشباب')">
+                        <div class="skin-type-icon">
+                            <img src="assets/images/placeholder.png" alt="منتجات حب الشباب">
+                        </div>
+                        <span>منتجات حب الشباب</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- منتجات نوع البشرة (تظهر عند الضغط) -->
+            <div id="skinProductsSection" class="hidden">
+                <div style="padding: 10px 30px 20px; display: flex; align-items: center; gap: 12px;">
+                    <button onclick="backToSkinTypes()" style="background: none; border: none; font-size: 22px; cursor: pointer; color: var(--primary-color);">
+                        <img src="assets/icons/arrow-right.svg" class="icon" alt="back">
+                    </button>
+                    <h2 id="skinProductsTitle" style="font-size: 20px; font-weight: 700; color: var(--text-primary);"></h2>
+                </div>
+                <div class="products-grid" id="skinProductsGrid" style="padding: 0 30px 30px;">
+                    <!-- Skin products loaded dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Offers Page -->
+        <div class="page hidden" id="offersPage">
+            <div class="breadcrumb">
+                <a href="#" onclick="navigateTo('home')">الرئيسية</a>
+                <span>/</span>
+                <span>العروض</span>
+            </div>
+            <div class="page-header">
+                <h1>العروض</h1>
+            </div>
+            <div class="filter-section">
+                <select class="filter-select" onchange="filterProducts(this.value)">
+                    <option value="new">الجديد</option>
+                    <option value="popular">الأكثر شعبية</option>
+                    <option value="sale" selected>العروض</option>
+                    <option value="price-high">السعر الأعلى فالأقل</option>
+                    <option value="price-low">السعر الأقل فالأعلى</option>
+                </select>
+            </div>
+            <div class="products-grid" id="offersProducts">
+                <!-- Products will be loaded dynamically -->
+            </div>
+
+            <!-- Why Choose Us -->
+            <section class="why-choose-us">
+                <div class="section-header-box">
+                    <h2>ليش تختارنا؟</h2>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-box">
+                        <img src="assets/icons/certificate.svg" class="icon" alt="certified">
+                        <h3>منتجات أصلية ومضمونة</h3>
+                    </div>
+                    <div class="feature-box">
+                        <img src="assets/icons/offers.svg" class="icon" alt="offers">
+                        <h3>أسعارنا تنافسية</h3>
+                    </div>
+                    <div class="feature-box">
+                        <img src="assets/icons/truck.svg" class="icon" alt="truck">
+                        <h3>تصلك منتجاتنا أينما كنت بالوقت المناسب</h3>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Need Help -->
+            <section class="need-help">
+                <div class="section-header-box">
+                    <h2>هل تحتاج المساعدة؟</h2>
+                </div>
+                <div class="help-icons">
+                    <div class="help-icon" onclick="showPopup('order')">
+                        <img src="assets/icons/cart.svg" class="icon" alt="cart">
+                        <span>كيفية الطلب</span>
+                    </div>
+                    <div class="help-icon" onclick="showPopup('shipping')">
+                        <img src="assets/icons/truck.svg" class="icon" alt="shipping">
+                        <span>التوصيل والشحن</span>
+                    </div>
+                    <div class="help-icon" onclick="showPopup('return')">
+                        <img src="assets/icons/undo.svg" class="icon" alt="return">
+                        <span>الاستبدال والاسترجاع</span>
+                    </div>
+                    <div class="help-icon" onclick="openEmail()">
+                        <img src="assets/icons/email.svg" class="icon" alt="email">
+                        <span>البريد الإلكتروني</span>
+                    </div>
+                    <div class="help-icon" onclick="openWhatsApp()">
+                        <img src="assets/icons/whatsapp.svg" class="icon" alt="whatsapp">
+                        <span>الاتصال</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Follow Us -->
+            <section class="follow-us">
+                <div class="section-header-box">
+                    <h2>تابعونا</h2>
+                </div>
+                <div class="social-icons">
+                    <a href="#" target="_blank" class="social-icon">
+                        <img src="assets/icons/facebook.svg" class="icon" alt="facebook">
+                    </a>
+                    <a href="#" target="_blank" class="social-icon">
+                        <img src="assets/icons/twitter.svg" class="icon" alt="twitter">
+                    </a>
+                    <a href="#" target="_blank" class="social-icon">
+                        <img src="assets/icons/instagram.svg" class="icon" alt="instagram">
+                    </a>
+                    <a href="#" target="_blank" class="social-icon">
+                        <img src="assets/icons/tiktok.svg" class="icon" alt="tiktok">
+                    </a>
+                    <a href="#" target="_blank" class="social-icon">
+                        <img src="assets/icons/whatsapp.svg" class="icon" alt="whatsapp">
+                    </a>
+                    <a href="#" target="_blank" class="social-icon">
+                        <img src="assets/icons/snapchat.svg" class="icon" alt="snapchat">
+                    </a>
+                </div>
+            </section>
+        </div>
+
+        <!-- Login Page -->
+        <div class="page hidden" id="loginPage">
+            <div class="auth-container" id="authContainer">
+                <div class="auth-box" id="authBox">
+                    <div class="auth-tabs">
+                        <button class="auth-tab active" onclick="switchAuthTab('login')">تسجيل الدخول</button>
+                        <button class="auth-tab" onclick="switchAuthTab('register')">إنشاء حساب</button>
+                    </div>
+                    <form class="auth-form" id="loginForm">
+                        <div class="form-group">
+                            <label>رقم الهاتف</label>
+                            <input type="tel" required placeholder="أدخل رقم هاتفك">
+                        </div>
+                        <div class="form-group">
+                            <label>كلمة المرور</label>
+                            <input type="password" required placeholder="أدخل كلمة المرور">
+                        </div>
+                        <button type="submit" class="auth-btn">تسجيل الدخول</button>
+                    </form>
+                    <form class="auth-form hidden" id="registerForm">
+                        <div class="form-group">
+                            <label>الاسم الكامل</label>
+                            <input type="text" required placeholder="أدخل اسمك الكامل">
+                        </div>
+                        <div class="form-group">
+                            <label>البريد الإلكتروني</label>
+                            <input type="email" required placeholder="أدخل بريدك الإلكتروني">
+                        </div>
+                        <div class="form-group">
+                            <label>رقم الهاتف</label>
+                            <input type="tel" required placeholder="أدخل رقم هاتفك">
+                        </div>
+                        <div class="form-group">
+                            <label>المحافظة</label>
+                            <select required>
+                                <option value="">اختر المحافظة</option>
+                                <option value="صنعاء">صنعاء</option>
+                                <option value="عدن">عدن</option>
+                                <option value="تعز">تعز</option>
+                                <option value="الحديدة">الحديدة</option>
+                                <option value="إب">إب</option>
+                                <option value="حضرموت">حضرموت</option>
+                                <option value="المحويت">المحويت</option>
+                                <option value="ذمار">ذمار</option>
+                                <option value="حجة">حجة</option>
+                                <option value="الجوف">الجوف</option>
+                                <option value="أبين">أبين</option>
+                                <option value="شبوة">شبوة</option>
+                                <option value="المهرة">المهرة</option>
+                                <option value="الضالع">الضالع</option>
+                                <option value="صعدة">صعدة</option>
+                                <option value="عمران">عمران</option>
+                                <option value="ريمة">ريمة</option>
+                                <option value="البيضاء">البيضاء</option>
+                                <option value="لحج">لحج</option>
+                                <option value="سقطرى">سقطرى</option>
+                                <option value="مأرب">مأرب</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>كلمة المرور</label>
+                            <input type="password" required placeholder="أدخل كلمة المرور">
+                        </div>
+                        <button type="submit" class="auth-btn">إنشاء حساب</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- User Profile Section (shown when logged in) -->
+            <div class="user-profile hidden" id="userProfile">
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <img src="assets/icons/user.svg" class="icon icon-lg" alt="user">
+                        </div>
+                        <div class="profile-info">
+                            <h2 id="profileName">-</h2>
+                            <p id="profilePhone">-</p>
+                        </div>
+                    </div>
+                    <div class="profile-details">
+                        <div class="profile-item">
+                            <img src="assets/icons/email.svg" class="icon" alt="email">
+                            <div>
+                                <label>البريد الإلكتروني</label>
+                                <span id="profileEmail">-</span>
+                            </div>
+                        </div>
+                        <div class="profile-item">
+                            <img src="assets/icons/location.svg" class="icon" alt="location">
+                            <div>
+                                <label>المحافظة</label>
+                                <span id="profileGovernorate">-</span>
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="profile-actions">
+                        <button class="btn-primary" onclick="navigateTo('orders')">
+                            <img src="assets/icons/box.svg" class="icon" alt="orders"> طلباتي
+                        </button>
+                        <button class="btn-secondary" onclick="handleLogout()">
+                            <img src="assets/icons/logout.svg" class="icon" alt="logout"> تسجيل الخروج
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notifications Page -->
+        <div class="page hidden" id="notificationsPage">
+            <div class="page-header">
+                <h1>الإشعارات</h1>
+            </div>
+            <div class="notifications-list" id="notificationsList">
+                <!-- Notifications will be loaded dynamically -->
+            </div>
+        </div>
+
+        <!-- Cart Page -->
+        <div class="page hidden" id="cartPage">
+            <div class="page-header">
+                <h1>سلة التسوق</h1>
+            </div>
+            <div class="cart-items" id="cartItems">
+                <!-- Cart items will be loaded dynamically -->
+            </div>
+            <div class="cart-summary">
+                <div class="cart-total" style="font-size: 16px; margin-bottom: 10px; color: var(--text-secondary);">
+                    <span>إجمالي المنتجات:</span>
+                    <span id="cartSubtotal">0 ر.س</span>
+                </div>
+                <div class="cart-total" style="font-size: 16px; margin-bottom: 10px; color: var(--text-secondary);">
+                    <span>سعر التوصيل:</span>
+                    <span id="deliveryFeeUI">0 ر.س</span>
+                </div>
+                <div class="cart-total" style="border-top: 1px solid var(--border-color); padding-top: 10px; margin-top: 10px;">
+                    <span>الإجمالي النهائي:</span>
+                    <span id="cartTotal">0 ر.س</span>
+                </div>
+                <div class="cart-actions">
+                    <button class="btn-secondary" onclick="navigateTo('home')">عودة للتسوق</button>
+                    <button class="btn-primary" onclick="navigateTo('checkout')">إتمام الطلب</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Checkout Page -->
+        <div class="page hidden" id="checkoutPage">
+            <div class="breadcrumb">
+                <a href="#" onclick="navigateTo('home')">الرئيسية</a>
+                <span>/</span>
+                <a href="#" onclick="navigateTo('cart')">السلة</a>
+                <span>/</span>
+                <span>إتمام الطلب</span>
+            </div>
+            <div class="page-header">
+                <h1>إتمام الطلب</h1>
+            </div>
+            <div class="checkout-container">
+                <div class="checkout-info">
+                    <h2>معلومات التوصيل</h2>
+                    <div class="info-display">
+                        <div class="info-item">
+                            <label>الاسم:</label>
+                            <span id="checkoutName">-</span>
+                        </div>
+                        <div class="info-item">
+                            <label>رقم الهاتف:</label>
+                            <span id="checkoutPhone">-</span>
+                        </div>
+                        <div class="info-item">
+                            <label>البريد الإلكتروني:</label>
+                            <span id="checkoutEmail">-</span>
+                        </div>
+                        <div class="info-item">
+                            <label>المحافظة:</label>
+                            <span id="checkoutGovernorate">-</span>
+                        </div>
+                    </div>
+
+                    <!-- ملخص الطلب في صفحة الدفع -->
+                    <div class="checkout-summary" style="background: var(--background-white); padding: 15px; border-radius: var(--border-radius); border: 1px solid var(--border-color); margin-bottom: 20px;">
+                        <h3 style="font-size: 16px; margin-bottom: 15px; color: var(--text-primary); border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">ملخص الطلب</h3>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; color: var(--text-secondary);">
+                            <span>إجمالي المنتجات:</span>
+                            <span id="checkoutSubtotal">0 ر.س</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; color: var(--text-secondary);">
+                            <span>سعر التوصيل:</span>
+                            <span id="checkoutDeliveryFee">0 ر.س</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border-color); font-weight: bold; font-size: 16px; color: var(--primary-color);">
+                            <span>الإجمالي النهائي:</span>
+                            <span id="checkoutTotal">0 ر.س</span>
+                        </div>
+                    </div>
+                    <form class="checkout-form">
+                        <div class="form-group">
+                            <label>تحديد موقع التوصيل</label>
+                            <div class="location-input">
+                                <input type="text" id="deliveryLocationInput" placeholder="سيتم تحديد موقعك تلقائياً..." readonly>
+                                <button type="button" onclick="autoDetectLocation()" class="location-picker-btn auto-detect-btn" id="autoDetectBtn" title="تحديد موقعي تلقائياً">
+                                    <img src="assets/icons/location.svg" class="icon" alt="detect">
+                                </button>
+                                <button type="button" onclick="openGoogleMapsVerify()" class="location-picker-btn verify-map-btn" id="verifyMapBtn" title="فتح في Google Maps للتأكد" style="display: none; background: #4285F4;">
+                                    <img src="assets/icons/google.svg" class="icon" alt="google">
+                                </button>
+                            </div>
+                            <input type="hidden" id="deliveryLat" name="deliveryLat">
+                            <input type="hidden" id="deliveryLng" name="deliveryLng">
+                            <small class="location-hint" id="locationHint">اضغط على زر التحديد لتحديد موقعك تلقائياً</small>
+                        </div>
+                        <div class="form-group">
+                            <label>وصف الموقع بالتفصيل</label>
+                            <textarea placeholder="اكتب وصف الموقع بالتفصيل"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>ملاحظات الطلب (اختياري)</label>
+                            <textarea id="orderNotes" placeholder="اكتب ملاحظاتك هنا إن وجدت... (مثال: وقت التوصيل المفضل، ملاحظات على المنتج، تفاصيل إضافية)" maxlength="300" rows="3"></textarea>
+                            <small class="char-count"><span id="notesCharCount">0</span>/300</small>
+                        </div>
+                    </form>
+
+                    <div class="payment-section">
+                        <h2>اختر طريقة الدفع</h2>
+                        
+                        <div class="payment-methods">
+                            <div class="payment-option" onclick="selectPaymentMethod('cash')">
+                                <input type="radio" name="payment" id="cash" value="cash">
+                                <label for="cash">
+                                    <img src="assets/icons/money.svg" class="icon" alt="cash">
+                                    <span>عند استلام الطلب</span>
+                                </label>
+                            </div>
+                            
+                            <div class="payment-option" onclick="selectPaymentMethod('transfer')">
+                                <input type="radio" name="payment" id="transfer" value="transfer">
+                                <label for="transfer">
+                                    <img src="assets/icons/bank.svg" class="icon" alt="bank">
+                                    <span>تحويل لمتجر بالميرا</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="payment-details hidden" id="transferDetails">
+                            <div class="bank-transfer-section">
+                                <h3>حسابات متجر بالميرا - كريمي</h3>
+                                <p class="account-owner">الاسم: عماد عمار عزي الكاهلي</p>
+                                <p class="account-owner">الجوال: 775264767</p>
+                                
+                                <div class="account-numbers">
+                                    <div class="account-item">
+                                        <span class="currency-label">ريال يمني (YER):</span>
+                                        <span class="account-number">3005085593</span>
+                                    </div>
+                                    <div class="account-item">
+                                        <span class="currency-label">ريال سعودي (SAR):</span>
+                                        <span class="account-number">3022792481</span>
+                                    </div>
+                                    <div class="account-item">
+                                        <span class="currency-label">دولار (USD):</span>
+                                        <span class="account-number">3179067551</span>
+                                    </div>
+                                </div>
+                                
+                                <p class="transfer-note">يمكن التحويل عبر أي شبكة أو محافظ إلكترونية</p>
+                            </div>
+                        </div>
+
+                        <div class="payment-details hidden" id="walletDetails">
+                            <h3>طرق الدفع الإلكترونية</h3>
+                            
+                            <div class="wallet-selector">
+                                <button class="wallet-btn" onclick="selectPaymentOption('bank')">
+                                    <img src="assets/icons/bank.svg" alt="البنك">
+                                    <span>البنك</span>
+                                </button>
+                                <button class="wallet-btn" onclick="selectPaymentOption('paytabs')">
+                                    <img src="assets/images/paytabs.png" alt="ون كاش">
+                                    <span>ون كاش</span>
+                                </button>
+                                <button class="wallet-btn" onclick="selectPaymentOption('jeib')">
+                                    <img src="assets/images/paytabs.png" alt="جيب">
+                                    <span>جيب</span>
+                                </button>
+                                <button class="wallet-btn" onclick="selectPaymentOption('flousk')">
+                                    <img src="assets/images/paytabs.png" alt="فلوسك">
+                                    <span>فلوسك</span>
+                                </button>
+                            </div>
+
+                            <!-- قسم رفع صورة إثبات التحويل -->
+                            <div class="transfer-proof-section">
+                                <div class="proof-header">
+                                    <img src="assets/icons/receipt.svg" class="icon" alt="receipt">
+                                    <span>إثبات التحويل</span>
+                                </div>
+                                <p class="proof-note">يرجى رفع صورة واضحة لعملية التحويل، لن يتم تأكيد الطلب بدونها</p>
+                                
+                                <div class="proof-upload-area" id="proofUploadArea">
+                                    <input type="file" id="transferProof" accept="image/jpeg,image/png,image/jpg" hidden>
+                                    <div class="upload-placeholder" id="uploadPlaceholder">
+                                        <img src="assets/icons/upload.svg" class="icon icon-lg" alt="upload">
+                                        <span>اضغط لرفع صورة التحويل</span>
+                                        <small>يجب أن تكون الصورة بصيغة JPG أو PNG</small>
+                                    </div>
+                                    <div class="image-preview hidden" id="imagePreview">
+                                        <img src="" alt="صورة إثبات التحويل">
+                                        <button type="button" class="change-image-btn" onclick="changeProofImage()">
+                                            <img src="assets/icons/edit.svg" class="icon" alt="edit">
+                                            تغيير الصورة
+                                        </button>
+                                    </div>
+                                </div>
+                                <small class="upload-status" id="uploadStatus"></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="checkout-actions">
+                    <button class="btn-secondary" onclick="navigateTo('cart')">عودة للسلة</button>
+                    <button class="btn-primary" onclick="completeOrder()">إتمام الطلب</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders Page -->
+        <div class="page hidden" id="ordersPage">
+            <div class="page-header">
+                <h1>طلباتي</h1>
+            </div>
+            <div class="orders-list" id="ordersList">
+                <!-- Orders will be loaded dynamically -->
+            </div>
+        </div>
+
+        <!-- Product Details Page -->
+        <div class="page hidden" id="productPage">
+            <!-- Content will be loaded dynamically -->
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>كل الحقوق محفوظة - PALMYRA STORE</p>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">
+        <img src="assets/icons/arrow-up.svg" class="icon" alt="up">
+    </button>
+
+    <!-- Popup Modal -->
+    <div class="popup-modal" id="popupModal">
+        <div class="popup-content">
+            <button class="popup-close" onclick="closePopup()">
+                <img src="assets/icons/close.svg" class="icon" alt="close">
+            </button>
+            <div class="popup-body" id="popupBody">
+                <!-- Popup content will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <script src="palmira-store.js?v=1.1"></script>
+
+</body>
+</html>
