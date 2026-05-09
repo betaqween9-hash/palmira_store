@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - بالميرا ستور</title>
+    <link rel="stylesheet" href="admin-panel.css">
+    <!-- PWA manifest disabled for local file access -->
+    <!-- <link rel="manifest" href="admin-manifest.json"> -->
+    <meta name="theme-color" content="#2D2D2D">
+</head>
+
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-container">
+            <div class="login-logo">
+                <img src="palmira_store.png" alt="PALMYRA STORE">
+                <h1>بالميرا ستور</h1>
+                <p>لوحة التحكم</p>
+            </div>
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label>اسم المستخدم</label>
+                    <input type="text" id="loginUsername" placeholder="أدخل اسم المستخدم" required>
+                </div>
+                <div class="form-group">
+                    <label>كلمة المرور</label>
+                    <input type="password" id="loginPassword" placeholder="أدخل كلمة المرور" required>
+                </div>
+                <button type="submit" class="btn-login">تسجيل الدخول</button>
+                <p class="login-hint">Admin: admin / admin<br>Employee: employee / employee</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="admin-container" style="display: none;">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="palmira_store.png" alt="PALMYRA STORE" class="sidebar-logo">
+                <h2>بالميرا ستور</h2>
+                <span>لوحة التحكم</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-page="dashboard">
+                    <img src="assets/icons/home.svg" class="icon icon-white" alt="home">
+                    <span>الرئيسية</span>
+                </a>
+                <a href="#" class="nav-item" data-page="orders">
+                    <img src="assets/icons/box.svg" class="icon icon-white" alt="orders">
+                    <span>الطلبات</span>
+                    <span class="nav-badge" id="ordersBadge">0</span>
+                </a>
+                <a href="#" class="nav-item" data-page="products">
+                    <img src="assets/icons/cart.svg" class="icon icon-white" alt="products">
+                    <span>المنتجات</span>
+                </a>
+                <a href="#" class="nav-item" data-page="categories">
+                    <img src="assets/icons/folder.svg" class="icon icon-white" alt="categories">
+                    <span>الأقسام</span>
+                </a>
+                <a href="#" class="nav-item" data-page="brands">
+                    <img src="assets/icons/brands.svg" class="icon icon-white" alt="brands">
+                    <span>الماركات</span>
+                </a>
+                <a href="#" class="nav-item" data-page="skinTypes">
+                    <img src="assets/icons/skin.svg" class="icon icon-white" alt="skin">
+                    <span>أنواع البشرة</span>
+                </a>
+                <a href="#" class="nav-item" data-page="offers">
+                    <img src="assets/icons/offers.svg" class="icon icon-white" alt="offers">
+                    <span>العروض</span>
+                </a>
+                <a href="#" class="nav-item" data-page="banners">
+                    <img src="assets/icons/ad.svg" class="icon icon-white" alt="banners">
+                    <span>البنرات</span>
+                </a>
+                <a href="#" class="nav-item" data-page="customers">
+                    <img src="assets/icons/users.svg" class="icon icon-white" alt="customers">
+                    <span>العملاء</span>
+                </a>
+                <a href="#" class="nav-item admin-only" data-page="users" style="display: none;">
+                    <img src="assets/icons/security.svg" class="icon icon-white" alt="users">
+                    <span>المستخدمين</span>
+                </a>
+                <a href="#" class="nav-item" data-page="notifications">
+                    <img src="assets/icons/notifications.svg" class="icon icon-white" alt="notifications">
+                    <span>الإشعارات</span>
+                </a>
+                <a href="#" class="nav-item admin-only" data-page="currencies" style="display:none;">
+                    <img src="assets/icons/offers.svg" class="icon icon-white" alt="currencies">
+                    <span>العملات</span>
+                </a>
+                <a href="#" class="nav-item" data-page="settings">
+                    <img src="assets/icons/settings.svg" class="icon icon-white" alt="settings">
+                    <span>الإعدادات</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-mini-info">
+                    <span id="currentUserName">المستخدم</span>
+                    <span id="currentUserRole">-</span>
+                </div>
+                <button class="btn-logout" id="logoutBtn">
+                    <img src="assets/icons/logout.svg" class="icon icon-white" alt="logout">
+                    <span>تسجيل الخروج</span>
+                </button>
+                <a href="palmira-store.html" class="btn-view-store" target="_blank">
+                    <img src="assets/icons/store.svg" class="icon" alt="store">
+                    <span>عرض المتجر</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Topbar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="menu-toggle" id="menuToggle">
+                        <img src="assets/icons/menu.svg" class="icon icon-white" alt="menu">
+                    </button>
+                    <div class="page-title-bar">
+                        <h1 id="pageTitle">الرئيسية</h1>
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <button class="notification-btn" id="notificationBtn">
+                        <img src="assets/icons/notifications.svg" class="icon icon-white" alt="notifications">
+                        <span class="badge" id="notificationBadge">0</span>
+                    </button>
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            <img src="assets/icons/user.svg" class="icon" alt="user">
+                        </div>
+                        <div class="user-details">
+                            <span class="user-name" id="topbarUserName">-</span>
+                            <span class="user-role" id="topbarUserRole">-</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Pages Container -->
+            <div class="pages-container">
+                <!-- Dashboard Page -->
+                <div class="page active" id="dashboardPage">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: #3498db;">
+                                <img src="assets/icons/box.svg" class="icon icon-white" alt="orders">
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="totalOrders">0</span>
+                                <span class="stat-label">إجمالي الطلبات</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: #2ecc71;">
+                                <img src="assets/icons/cart.svg" class="icon icon-white" alt="products">
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="totalProducts">0</span>
+                                <span class="stat-label">المنتجات</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: #e74c3c;">
+                                <img src="assets/icons/users.svg" class="icon icon-white" alt="customers">
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="totalCustomers">0</span>
+                                <span class="stat-label">العملاء</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: #f39c12;">
+                                <img src="assets/icons/folder.svg" class="icon icon-white" alt="categories">
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="totalCategories">0</span>
+                                <span class="stat-label">الأقسام</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: #9b59b6;">
+                                <img src="assets/icons/money.svg" class="icon icon-white" alt="revenue">
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="todayRevenue">0</span>
+                                <span class="stat-label">مبيعات اليوم</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: #1abc9c;">
+                                <img src="assets/icons/chart.svg" class="icon icon-white" alt="monthly">
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="monthlyRevenue">0</span>
+                                <span class="stat-label">مبيعات الشهر</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="charts-grid">
+                        <div class="chart-card">
+                            <h3>المبيعات اليومية</h3>
+                            <canvas id="dailySalesChart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h3>المبيعات الشهرية</h3>
+                            <canvas id="monthlySalesChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h3>آخر الطلبات</h3>
+                                <a href="#" class="view-all" onclick="navigateTo('orders')">عرض الكل</a>
+                            </div>
+                            <div class="table-container">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>رقم الطلب</th>
+                                            <th>العميل</th>
+                                            <th>المبلغ</th>
+                                            <th>الحالة</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recentOrdersTable"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h3>أعلى المنتجات مبيعاً</h3>
+                            </div>
+                            <div class="top-products-list" id="topProductsList"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Orders Page -->
+                <div class="page" id="ordersPage">
+                    <div class="page-header">
+                        <h2>إدارة الطلبات</h2>
+                        <div class="page-actions">
+                            <div class="filter-tabs">
+                                <button class="filter-btn active" data-filter="all">الكل</button>
+                                <button class="filter-btn" data-filter="pending">قيد المراجعة</button>
+                                <button class="filter-btn" data-filter="processing">جاري التجهيز</button>
+                                <button class="filter-btn" data-filter="ready">جاهز</button>
+                                <button class="filter-btn" data-filter="delivered">تم التوصيل</button>
+                                <button class="filter-btn" data-filter="cancelled">ملغي</button>
+                            </div>
+                            <div class="search-box">
+                                <img src="assets/icons/search.svg" class="icon" alt="search">
+                                <input type="text" placeholder="بحث في الطلبات..." id="ordersSearch">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>رقم الطلب</th>
+                                    <th>العميل</th>
+                                    <th>رقم الهاتف</th>
+                                    <th>المبلغ</th>
+                                    <th>طريقة الدفع</th>
+                                    <th>الحالة</th>
+                                    <th>التاريخ</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersTable"></tbody>
+                        </table>
+                    </div>
+                    <div class="pagination" id="ordersPagination"></div>
+                </div>
+
+                <!-- Products Page -->
+                <div class="page" id="productsPage">
+                    <div class="page-header">
+                        <h2>إدارة المنتجات</h2>
+                        <div class="page-actions">
+                            <div class="search-box">
+                                <img src="assets/icons/search.svg" class="icon" alt="search">
+                                <input type="text" placeholder="بحث في المنتجات..." id="productsSearch">
+                            </div>
+                            <button class="btn-primary" onclick="openAddProductModal()">
+                                <img src="assets/icons/plus.svg" class="icon" alt="add">
+                                إضافة منتج
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>الصورة</th>
+                                    <th>المنتج</th>
+                                    <th>السعر</th>
+                                    <th>السعر قبل الخصم</th>
+                                    <th>الكمية</th>
+                                    <th>القسم</th>
+                                    <th>الماركة</th>
+                                    <th>الحالة</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsTable"></tbody>
+                        </table>
+                    </div>
+                    <div class="pagination" id="productsPagination"></div>
+                </div>
+
+                <!-- Categories Page -->
+                <div class="page" id="categoriesPage">
+                    <div class="page-header">
+                        <h2>إدارة الأقسام</h2>
+                        <div class="page-actions">
+                            <button class="btn-primary" onclick="openAddCategoryModal()">
+                                <img src="assets/icons/plus.svg" class="icon" alt="add">
+                                إضافة قسم
+                            </button>
+                        </div>
+                    </div>
+                    <div class="categories-tree" id="categoriesTree"></div>
+                </div>
+
+                <!-- Brands Page -->
+                <div class="page" id="brandsPage">
+                    <div class="page-header">
+                        <h2>إدارة الماركات</h2>
+                        <div class="page-actions">
+                            <button class="btn-primary" onclick="openAddBrandModal()">
+                                <img src="assets/icons/plus.svg" class="icon" alt="add">
+                                إضافة ماركة
+                            </button>
+                        </div>
+                    </div>
+                    <div class="brands-grid" id="brandsGrid"></div>
+                </div>
+
+                <!-- Skin Types Page -->
+                <div class="page" id="skinTypesPage">
+                    <div class="page-header">
+                        <h2>إدارة أنواع البشرة</h2>
+                        <div class="page-actions">
+                            <button class="btn-primary" onclick="openAddSkinTypeModal()">
+                                <img src="assets/icons/plus.svg" class="icon" alt="add">
+                                إضافة نوع
+                            </button>
+                        </div>
+                    </div>
+                    <div class="skin-types-grid" id="skinTypesGrid"></div>
+                </div>
+
+                <!-- Offers Page -->
+                <div class="page" id="offersPage">
+                    <div class="page-header">
+                        <h2>إدارة العروض</h2>
+                        <div class="page-actions">
+                            <button class="btn-primary" onclick="openAddOfferModal()">
+                                <img src="assets/icons/plus.svg" class="icon" alt="add">
+                                إضافة عرض
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>المنتج</th>
+                                    <th>نسبة الخصم</th>
+                                    <th>السعر بعد الخصم</th>
+                                    <th>تاريخ البداية</th>
+                                    <th>تاريخ النهاية</th>
+                                    <th>الحالة</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="offersTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Banners Page -->
+                <div class="page" id="bannersPage">
+                    <div class="page-header">
+                        <h2>إدارة البنرات</h2>
+                        <p class="page-subtitle">يتم عرض 3 بنرات فقط في الصفحة الرئيسية</p>
+                    </div>
+                    <div class="banners-grid" id="bannersGrid">
+                        <div class="banner-card" data-index="0">
+                            <h4>البنر الأول</h4>
+                            <div class="img-upload-zone banner-upload-zone" onclick="document.getElementById('banner0File').click()">
+                                <div class="img-upload-preview" id="banner0Preview" style="height:160px;">
+                                    <img src="" id="banner0PreviewImg" style="display:none; width:100%; height:100%; object-fit:cover; border-radius:8px;">
+                                    <span class="img-upload-placeholder" id="banner0Placeholder">
+                                        <img src="assets/icons/plus.svg" class="icon" alt="upload" style="opacity:0.4;">
+                                        <span>اضغط لاختيار صورة البنر</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <input type="file" id="banner0File" accept="image/*" style="display:none;" onchange="previewSingleImage(this,'banner0PreviewImg','banner0Placeholder','banner0Url')">
+                            <input type="hidden" id="banner0Url">
+                            <div class="form-group" style="margin-top:12px;">
+                                <label>رابط الانتقال</label>
+                                <input type="text" id="banner0Link" placeholder="رابط عند الضغط على البنر">
+                            </div>
+                        </div>
+                        <div class="banner-card" data-index="1">
+                            <h4>البنر الثاني</h4>
+                            <div class="img-upload-zone banner-upload-zone" onclick="document.getElementById('banner1File').click()">
+                                <div class="img-upload-preview" id="banner1Preview" style="height:160px;">
+                                    <img src="" id="banner1PreviewImg" style="display:none; width:100%; height:100%; object-fit:cover; border-radius:8px;">
+                                    <span class="img-upload-placeholder" id="banner1Placeholder">
+                                        <img src="assets/icons/plus.svg" class="icon" alt="upload" style="opacity:0.4;">
+                                        <span>اضغط لاختيار صورة البنر</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <input type="file" id="banner1File" accept="image/*" style="display:none;" onchange="previewSingleImage(this,'banner1PreviewImg','banner1Placeholder','banner1Url')">
+                            <input type="hidden" id="banner1Url">
+                            <div class="form-group" style="margin-top:12px;">
+                                <label>رابط الانتقال</label>
+                                <input type="text" id="banner1Link" placeholder="رابط عند الضغط على البنر">
+                            </div>
+                        </div>
+                        <div class="banner-card" data-index="2">
+                            <h4>البنر الثالث</h4>
+                            <div class="img-upload-zone banner-upload-zone" onclick="document.getElementById('banner2File').click()">
+                                <div class="img-upload-preview" id="banner2Preview" style="height:160px;">
+                                    <img src="" id="banner2PreviewImg" style="display:none; width:100%; height:100%; object-fit:cover; border-radius:8px;">
+                                    <span class="img-upload-placeholder" id="banner2Placeholder">
+                                        <img src="assets/icons/plus.svg" class="icon" alt="upload" style="opacity:0.4;">
+                                        <span>اضغط لاختيار صورة البنر</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <input type="file" id="banner2File" accept="image/*" style="display:none;" onchange="previewSingleImage(this,'banner2PreviewImg','banner2Placeholder','banner2Url')">
+                            <input type="hidden" id="banner2Url">
+                            <div class="form-group" style="margin-top:12px;">
+                                <label>رابط الانتقال</label>
+                                <input type="text" id="banner2Link" placeholder="رابط عند الضغط على البنر">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page-actions" style="justify-content: center; margin-top: 30px;">
+                        <button class="btn-primary" onclick="saveBanners()">
+                            <img src="assets/icons/check.svg" class="icon" alt="save">
+                            حفظ البنرات
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Customers Page -->
+                <div class="page" id="customersPage">
+                    <div class="page-header">
+                        <h2>إدارة العملاء</h2>
+                        <div class="page-actions">
+                            <div class="search-box">
+                                <img src="assets/icons/search.svg" class="icon" alt="search">
+                                <input type="text" placeholder="بحث في العملاء..." id="customersSearch">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>الاسم</th>
+                                    <th>رقم الهاتف</th>
+                                    <th>عدد الطلبات</th>
+                                    <th>إجمالي المشتريات</th>
+                                    <th>تاريخ التسجيل</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customersTable"></tbody>
+                        </table>
+                    </div>
+                    <div class="pagination" id="customersPagination"></div>
+                </div>
+
+                <!-- Users Page (Admin Only) -->
+                <div class="page" id="usersPage">
+                    <div class="page-header">
+                        <h2>إدارة المستخدمين</h2>
+                        <div class="page-actions">
+                            <button class="btn-primary" onclick="openAddUserModal()">
+                                <img src="assets/icons/plus.svg" class="icon" alt="add">
+                                إضافة مستخدم
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>الاسم</th>
+                                    <th>اسم المستخدم</th>
+                                    <th>الدور</th>
+                                    <th>الحالة</th>
+                                    <th>آخر دخول</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Notifications Page -->
+                <div class="page" id="notificationsPage">
+                    <div class="page-header">
+                        <h2>إدارة الإشعارات</h2>
+                        <div class="page-actions">
+                            <button class="btn-primary" onclick="openSendNotificationModal()">
+                                <img src="assets/icons/plus.svg" class="icon" alt="add">
+                                إرسال إشعار
+                            </button>
+                        </div>
+                    </div>
+                    <div class="notifications-list" id="notificationsList"></div>
+                </div>
+
+                <!-- Settings Page -->
+                <div class="page" id="settingsPage">
+                    <div class="page-header">
+                        <h2>إعدادات المتجر</h2>
+                    </div>
+                    <div class="settings-container">
+                        <div class="settings-card">
+                            <h3>معلومات المتجر</h3>
+                            <form id="storeSettingsForm">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>اسم المتجر</label>
+                                        <input type="text" id="storeName" placeholder="اسم المتجر">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>رقم الهاتف</label>
+                                        <input type="text" id="storePhone" placeholder="رقم الهاتف">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>البريد الإلكتروني</label>
+                                        <input type="email" id="storeEmail" placeholder="البريد الإلكتروني">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>سعر التوصيل</label>
+                                        <input type="number" id="deliveryPrice" placeholder="سعر التوصيل">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>عنوان المتجر</label>
+                                    <input type="text" id="storeAddress" placeholder="العنوان">
+                                </div>
+                                <button type="submit" class="btn-primary">حفظ الإعدادات</button>
+                            </form>
+                        </div>
+
+                        <div class="settings-card admin-only">
+                            <h3>إدارة كلمات المرور</h3>
+                            <p style="color: var(--text-gray); font-size: 13px; margin-bottom: 20px;">تغيير كلمة المرور للمشرفين أو الموظفين (للمسؤول فقط)</p>
+                            <form id="passwordSettingsForm">
+                                <div class="form-group">
+                                    <label>اختر المستخدم</label>
+                                    <select id="passSettingUser" required>
+                                        <option value="">اختر المستخدم...</option>
+                                    </select>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>كلمة المرور الجديدة</label>
+                                        <input type="password" id="passSettingNew" required minlength="4">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>تأكيد كلمة المرور</label>
+                                        <input type="password" id="passSettingConfirm" required minlength="4">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn-primary" style="margin-top: 10px;">تحديث كلمة المرور</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Currencies Page -->
+                <div class="page" id="currenciesPage">
+                    <div class="page-header">
+                        <div>
+                            <h2>إدارة العملات</h2>
+                            <p class="page-subtitle">إدارة العملات وأسعار الصرف المستخدمة في المتجر</p>
+                        </div>
+                        <div class="page-actions">
+                            <button class="btn-primary" onclick="openAddCurrencyModal()" id="addCurrencyBtn">
+                                <img src="assets/icons/plus.svg" class="icon" alt="add">
+                                إضافة عملة جديدة
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="stats-grid" id="currencyStatsGrid">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:#fff3cd;">
+                                <img src="assets/icons/offers.svg" class="icon" alt="total" style="filter:invert(75%) sepia(50%) saturate(800%) hue-rotate(5deg);">
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="statTotalCurrencies">0</span>
+                                <span class="stat-label">إجمالي العملات</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:#d4edda;">
+                                <img src="assets/icons/check.svg" class="icon" alt="active" style="filter:invert(37%) sepia(72%) saturate(500%) hue-rotate(108deg);">
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="statActiveCurrencies">0</span>
+                                <span class="stat-label">العملات المفعّلة</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:#cce5ff;">
+                                <img src="assets/icons/money.svg" class="icon" alt="default" style="filter:invert(29%) sepia(88%) saturate(700%) hue-rotate(195deg);">
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="statDefaultCurrency">-</span>
+                                <span class="stat-label">العملة الافتراضية</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:#f0f0f0;">
+                                <img src="assets/icons/edit.svg" class="icon" alt="update" style="filter:invert(40%) sepia(80%) saturate(600%) hue-rotate(330deg);">
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="statLastUpdate" style="font-size:14px;">-</span>
+                                <span class="stat-label">آخر تحديث</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Toolbar -->
+                    <div class="currency-toolbar">
+                        <div class="currency-search-box">
+                            <img src="assets/icons/search.svg" class="icon" alt="search">
+                            <input type="text" id="currencySearch" placeholder="بحث بالاسم أو الرمز..." oninput="renderCurrencies()">
+                        </div>
+                        <div class="currency-filter-wrap">
+                            <button class="curr-filter-btn active" data-filter="all" onclick="setCurrencyFilter('all', this)">الكل</button>
+                            <button class="curr-filter-btn" data-filter="active" onclick="setCurrencyFilter('active', this)">مفعّل</button>
+                            <button class="curr-filter-btn" data-filter="inactive" onclick="setCurrencyFilter('inactive', this)">معطّل</button>
+                            <button class="curr-filter-btn" data-filter="default" onclick="setCurrencyFilter('default', this)">الافتراضية</button>
+                        </div>
+                    </div>
+
+                    <!-- Table -->
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>اسم العملة</th>
+                                    <th>الرمز</th>
+                                    <th>سعر الصرف</th>
+                                    <th>الحالة</th>
+                                    <th>افتراضية</th>
+                                    <th>آخر تحديث</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="currenciesTable"></tbody>
+                        </table>
+                        <div class="pagination" id="currenciesPagination"></div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Currency Modal -->
+    <div class="modal" id="currencyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="currencyModalTitle">إضافة عملة</h3>
+                <button class="modal-close" onclick="closeModal('currencyModal')">
+                    <img src="assets/icons/close.svg" class="icon" alt="close">
+                </button>
+            </div>
+            <form id="currencyForm">
+                <input type="hidden" id="currencyId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>اسم العملة *</label>
+                        <input type="text" id="currencyName" placeholder="مثال: ريال سعودي" required>
+                    </div>
+                    <div class="form-group">
+                        <label>رمز العملة *</label>
+                        <input type="text" id="currencyCode" placeholder="مثال: SAR" maxlength="5" required style="text-transform:uppercase;">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>سعر الصرف *</label>
+                        <input type="number" id="currencyRate" placeholder="1.00" step="0.0001" min="0.0001" required>
+                        <small style="color:var(--text-gray);font-size:12px;">نسبة مقارنةً بالعملة الأساسية</small>
+                    </div>
+                    <div class="form-group">
+                        <label>رمز العرض</label>
+                        <input type="text" id="currencySymbol" placeholder="مثال: ر.س" maxlength="5">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>الحالة</label>
+                        <select id="currencyStatus">
+                            <option value="active">مفعّلة</option>
+                            <option value="inactive">معطّلة</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="display:flex;align-items:center;gap:10px;padding-top:28px;">
+                        <input type="checkbox" id="currencyIsDefault" style="width:18px;height:18px;cursor:pointer;">
+                        <label for="currencyIsDefault" style="margin:0;cursor:pointer;">تعيين كعملة افتراضية</label>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeModal('currencyModal')">إلغاء</button>
+                    <button type="submit" class="btn-primary">حفظ العملة</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <!-- Product Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3 id="productModalTitle">إضافة منتج</h3>
+                <button class="modal-close" onclick="closeModal('productModal')">
+                    <img src="assets/icons/close.svg" class="icon" alt="close">
+                </button>
+            </div>
+            <form id="productForm">
+                <input type="hidden" id="productId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>اسم المنتج *</label>
+                        <input type="text" id="productName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>القسم الرئيسي *</label>
+                        <select id="productCategoryMain" required>
+                            <option value="">اختر القسم الرئيسي</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row" id="nestedCategoryRow" style="display: none;">
+                    <div class="form-group" id="subCategoryGroup" style="display: none;">
+                        <label>القسم الفرعي</label>
+                        <select id="productCategorySub">
+                            <option value="">اختر القسم الفرعي</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="innerCategoryGroup" style="display: none;">
+                        <label>القسم الداخلي</label>
+                        <select id="productCategoryInner">
+                            <option value="">اختر القسم الداخلي</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>السعر بعد الخصم *</label>
+                        <input type="number" id="productPrice" required>
+                    </div>
+                    <div class="form-group">
+                        <label>السعر قبل الخصم</label>
+                        <input type="number" id="productOldPrice" placeholder="اتركه فارغاً إذا لا يوجد خصم">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>الكمية *</label>
+                        <input type="number" id="productQuantity" required>
+                    </div>
+                    <div class="form-group">
+                        <label>الماركة</label>
+                        <select id="productBrand">
+                            <option value="">اختر الماركة</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group" id="skinTypeGroup" style="display: none;">
+                        <label>نوع البشرة</label>
+                        <select id="productSkinType">
+                            <option value="">اختر نوع البشرة</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>حجم المنتج</label>
+                        <input type="text" id="productSize" placeholder="مثال: 50ml, 100g">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>طريقة الاستخدام</label>
+                    <textarea id="productUsage" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>الوصف</label>
+                    <textarea id="productDescription" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>صور المنتج (الحد الأقصى: 5 صور، 2MB للصورة)</label>
+                    <div id="imageUploadZone" style="position: relative; padding: 25px 15px; background: linear-gradient(135deg, #fefefe, #f8f8f8); border: 2px dashed #d0d0d0; border-radius: 12px; text-align: center; cursor: pointer; transition: all 0.3s ease;" onclick="document.getElementById('productImageFiles').click()" onmouseover="this.style.borderColor='#f78686'; this.style.background='linear-gradient(135deg, #fff5f5, #fef0f0)'" onmouseout="this.style.borderColor='#d0d0d0'; this.style.background='linear-gradient(135deg, #fefefe, #f8f8f8)'">
+                        <img src="assets/icons/plus.svg" class="icon" alt="upload" style="width: 32px; height: 32px; opacity: 0.5; margin-bottom: 8px;">
+                        <p style="margin: 0; color: #888; font-size: 14px;">اضغط لاختيار الصور أو اسحبها هنا</p>
+                        <p style="margin: 5px 0 0; color: #aaa; font-size: 12px;">PNG, JPG, WEBP - حد أقصى 2MB للصورة</p>
+                        <input type="file" id="productImageFiles" multiple accept="image/*"
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;">
+                    </div>
+                    <div id="productImagePreviews" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px;">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group checkbox-group">
+                        <label><input type="checkbox" id="productIsNew"> منتج جديد</label>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <label><input type="checkbox" id="productIsSale"> متاح للبيع</label>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeModal('productModal')">إلغاء</button>
+                    <button type="submit" class="btn-primary">حفظ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Category Modal -->
+    <div class="modal" id="categoryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="categoryModalTitle">إضافة قسم</h3>
+                <button class="modal-close" onclick="closeModal('categoryModal')">
+                    <img src="assets/icons/close.svg" class="icon" alt="close">
+                </button>
+            </div>
+            <form id="categoryForm">
+                <input type="hidden" id="categoryId">
+                
+                <!-- نوع القسم -->
+                <div class="form-group" id="categoryTypeGroup">
+                    <label style="font-weight: 600; margin-bottom: 12px; display: block;">نوع القسم *</label>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <label onclick="setCategoryType('main')" id="catTypeMain" style="flex: 1; min-width: 120px; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 15px 10px; border: 2px solid #e0e0e0; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; background: #fafafa; text-align: center;">
+                            <input type="radio" name="categoryType" value="main" style="display: none;">
+                            <span style="font-size: 28px;">📁</span>
+                            <span style="font-weight: 600; font-size: 14px; color: #333;">قسم رئيسي</span>
+                            <span style="font-size: 11px; color: #999;">مثل: العناية بالبشرة</span>
+                        </label>
+                        <label onclick="setCategoryType('sub')" id="catTypeSub" style="flex: 1; min-width: 120px; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 15px 10px; border: 2px solid #e0e0e0; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; background: #fafafa; text-align: center;">
+                            <input type="radio" name="categoryType" value="sub" style="display: none;">
+                            <span style="font-size: 28px;">📂</span>
+                            <span style="font-weight: 600; font-size: 14px; color: #333;">قسم فرعي</span>
+                            <span style="font-size: 11px; color: #999;">مثل: العناية بالوجه</span>
+                        </label>
+                        <label onclick="setCategoryType('inner')" id="catTypeInner" style="flex: 1; min-width: 120px; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 15px 10px; border: 2px solid #e0e0e0; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; background: #fafafa; text-align: center;">
+                            <input type="radio" name="categoryType" value="inner" style="display: none;">
+                            <span style="font-size: 28px;">📄</span>
+                            <span style="font-weight: 600; font-size: 14px; color: #333;">قسم داخلي</span>
+                            <span style="font-size: 11px; color: #999;">مثل: غسول الوجه</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- القسم الرئيسي الأب (يظهر للفرعي والداخلي) -->
+                <div class="form-group" id="catParentMainGroup" style="display: none;">
+                    <label>القسم الرئيسي *</label>
+                    <select id="catParentMain" onchange="onCatParentMainChange()">
+                        <option value="">اختر القسم الرئيسي</option>
+                    </select>
+                </div>
+
+                <!-- القسم الفرعي الأب (يظهر للداخلي فقط) -->
+                <div class="form-group" id="catParentSubGroup" style="display: none;">
+                    <label>القسم الفرعي *</label>
+                    <select id="catParentSub">
+                        <option value="">اختر القسم الفرعي</option>
+                    </select>
+                </div>
+
+                <!-- حقل مخفي لحفظ parentId النهائي -->
+                <input type="hidden" id="categoryParent">
+
+                <div class="form-group">
+                    <label>اسم القسم *</label>
+                    <input type="text" id="categoryName" required placeholder="أدخل اسم القسم">
+                </div>
+                <div class="form-group">
+                    <label>صورة القسم</label>
+                    <div class="img-upload-zone" onclick="document.getElementById('categoryImageFile').click()">
+                        <div class="img-upload-preview" id="categoryImagePreview">
+                            <img src="" id="categoryImagePreviewImg" style="display:none;">
+                            <span class="img-upload-placeholder" id="categoryImagePlaceholder">
+                                <img src="assets/icons/plus.svg" class="icon" alt="upload" style="opacity:0.4;">
+                                <span>اضغط لاختيار صورة</span>
+                            </span>
+                        </div>
+                    </div>
+                    <input type="file" id="categoryImageFile" accept="image/*" style="display:none;" onchange="previewSingleImage(this,'categoryImagePreviewImg','categoryImagePlaceholder','categoryImage')">
+                    <input type="hidden" id="categoryImage">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeModal('categoryModal')">إلغاء</button>
+                    <button type="submit" class="btn-primary">حفظ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Brand Modal -->
+    <div class="modal" id="brandModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="brandModalTitle">إضافة ماركة</h3>
+                <button class="modal-close" onclick="closeModal('brandModal')">
+                    <img src="assets/icons/close.svg" class="icon" alt="close">
+                </button>
+            </div>
+            <form id="brandForm">
+                <input type="hidden" id="brandId">
+                <div class="form-group">
+                    <label>اسم الماركة *</label>
+                    <input type="text" id="brandName" required>
+                </div>
+                <div class="form-group">
+                    <label>حرف الماركة (للعرض)</label>
+                    <input type="text" id="brandLetter" maxlength="1" placeholder="مثال: L">
+                </div>
+                <div class="form-group">
+                    <label>شعار الماركة</label>
+                    <div class="img-upload-zone" onclick="document.getElementById('brandImageFile').click()">
+                        <div class="img-upload-preview" id="brandImagePreview">
+                            <img src="" id="brandImagePreviewImg" style="display:none;">
+                            <span class="img-upload-placeholder" id="brandImagePlaceholder">
+                                <img src="assets/icons/plus.svg" class="icon" alt="upload" style="opacity:0.4;">
+                                <span>اضغط لاختيار صورة</span>
+                            </span>
+                        </div>
+                    </div>
+                    <input type="file" id="brandImageFile" accept="image/*" style="display:none;" onchange="previewSingleImage(this,'brandImagePreviewImg','brandImagePlaceholder','brandImage')">
+                    <input type="hidden" id="brandImage">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeModal('brandModal')">إلغاء</button>
+                    <button type="submit" class="btn-primary">حفظ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Skin Type Modal -->
+    <div class="modal" id="skinTypeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="skinTypeModalTitle">إضافة نوع بشرة</h3>
+                <button class="modal-close" onclick="closeModal('skinTypeModal')">
+                    <img src="assets/icons/close.svg" class="icon" alt="close">
+                </button>
+            </div>
+            <form id="skinTypeForm">
+                <input type="hidden" id="skinTypeId">
+                <div class="form-group">
+                    <label>اسم نوع البشرة *</label>
+                    <input type="text" id="skinTypeName" required>
+                </div>
+                <div class="form-group">
+                    <label>صورة نوع البشرة</label>
+                    <div class="img-upload-zone" onclick="document.getElementById('skinTypeImageFile').click()">
+                        <div class="img-upload-preview" id="skinTypeImagePreview">
+                            <img src="" id="skinTypeImagePreviewImg" style="display:none;">
+                            <span class="img-upload-placeholder" id="skinTypeImagePlaceholder">
+                                <img src="assets/icons/plus.svg" class="icon" alt="upload" style="opacity:0.4;">
+                                <span>اضغط لاختيار صورة</span>
+                            </span>
+                        </div>
+                    </div>
+                    <input type="file" id="skinTypeImageFile" accept="image/*" style="display:none;" onchange="previewSingleImage(this,'skinTypeImagePreviewImg','skinTypeImagePlaceholder','skinTypeImage')">
+                    <input type="hidden" id="skinTypeImage">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeModal('skinTypeModal')">إلغاء</button>
+                    <button type="submit" class="btn-primary">حفظ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Offer Modal -->
+    <div class="modal" id="offerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="offerModalTitle">إضافة عرض</h3>
+                <button class="modal-close" onclick="closeModal('offerModal')">
+                    <img src="assets/icons/close.svg" class="icon" alt="close">
+                </button>
+            </div>
+            <form id="offerForm">
+                <input type="hidden" id="offerId">
+                <div class="form-group">
+                    <label>المنتج *</label>
+                    <div class="product-search-wrap" style="position:relative;">
+                        <input type="text" id="offerProductSearch" placeholder="ابحث عن منتج..." autocomplete="off"
+                            oninput="filterOfferProducts(this.value)"
+                            onfocus="filterOfferProducts(this.value)"
+                            style="width:100%;">
+                        <div id="offerProductDropdown" class="product-search-dropdown" style="display:none;"></div>
+                    </div>
+                    <input type="hidden" id="offerProduct" required>
+                    <div id="offerProductSelected" class="product-selected-badge" style="display:none;"></div>
+                </div>
+                <div class="form-group">
+                    <label>نسبة الخصم (%) *</label>
+                    <input type="number" id="offerPercentage" min="1" max="99" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>تاريخ البداية *</label>
+                        <input type="date" id="offerStartDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>تاريخ النهاية *</label>
+                        <input type="date" id="offerEndDate" required>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeModal('offerModal')">إلغاء</button>
+                    <button type="submit" class="btn-primary">حفظ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- User Modal -->
+    <div class="modal" id="userModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="userModalTitle">إضافة مستخدم</h3>
+                <button class="modal-close" onclick="closeModal('userModal')">
+                    <img src="assets/icons/close.svg" class="icon" alt="close">
+                </button>
+            </div>
+            <form id="userForm">
+                <input type="hidden" id="userId">
+                <div class="form-group">
+                    <label>الاسم الكامل *</label>
+                    <input type="text" id="userFullName" required>
+                </div>
+                <div class="form-group">
+                    <label>اسم المستخدم *</label>
+                    <input type="text" id="userUsername" required>
+                </div>
+                <div class="form-group">
+                    <label>كلمة المرور *</label>
+                    <input type="password" id="userPassword" placeholder="اتركه فارغاً لل keeping الحالية عند التعديل">
+                </div>
+                <div class="form-group">
+                    <label>الدور *</label>
+                    <select id="userRole" required>
+                        <option value="admin">Admin - تحكم كامل</option>
+                        <option value="employee">Employee - طلبات فقط</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeModal('userModal')">إلغاء</button>
+                    <button type="submit" class="btn-primary">حفظ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Modal -->
+    <div class="modal" id="notificationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>إرسال إشعار</h3>
+                <button class="modal-close" onclick="closeModal('notificationModal')">
+                    <img src="assets/icons/close.svg" class="icon" alt="close">
+                </button>
+            </div>
+            <form id="notificationForm">
+                <div class="form-group">
+                    <label>عنوان الإشعار *</label>
+                    <input type="text" id="notificationTitle" required>
+                </div>
+                <div class="form-group">
+                    <label>نص الإشعار *</label>
+                    <textarea id="notificationBody" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>المرسل إليه</label>
+                    <select id="notificationTarget">
+                        <option value="all">جميع العملاء</option>
+                        <option value="customers">عملاء محددين</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeModal('notificationModal')">إلغاء</button>
+                    <button type="submit" class="btn-primary">إرسال</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Order Details Modal -->
+    <div class="modal" id="orderDetailsModal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3>تفاصيل الطلب <span id="orderDetailsNumber"></span></h3>
+                <button class="modal-close" onclick="closeModal('orderDetailsModal')">
+                    <img src="assets/icons/close.svg" class="icon" alt="close">
+                </button>
+            </div>
+            <div id="orderDetailsContent"></div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="deleteModal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h3>تأكيد الحذف</h3>
+                <button class="modal-close" onclick="closeModal('deleteModal')">
+                    <img src="assets/icons/close.svg" class="icon" alt="close">
+                </button>
+            </div>
+            <p id="deleteMessage">هل أنت متأكد من حذف هذا العنصر؟</p>
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" onclick="closeModal('deleteModal')">إلغاء</button>
+                <button type="button" class="btn-danger" id="confirmDeleteBtn">حذف</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- PWA Install Prompt -->
+    <div class="pwa-prompt" id="pwaPrompt" style="display: none;">
+        <div class="pwa-prompt-content">
+            <img src="palmira_store.png" alt="Logo">
+            <p>أضف بالميرا ستور إلى شاشتك الرئيسية</p>
+            <button onclick="installPWA()">إضافة</button>
+            <button onclick="dismissPWA()">لاحقاً</button>
+        </div>
+    </div>
+
+    <!-- Chart.js disabled for local file access (no CDN requirement) -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+    <script src="admin-panel.js"></script>
+</body>
+
+</html>
